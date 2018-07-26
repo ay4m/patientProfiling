@@ -1,0 +1,55 @@
+{% load staticfiles %}
+<html>
+    <head>
+
+    </head>
+        <script type="text/javascript" src="{% static 'instascan.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'jquery.js' %}"></script>
+
+
+    <body>
+
+        <div align="left">
+            <video id="preview" height="500px" width="500px"></video>
+        </div>
+
+
+    </body>
+    <script type="text/javascript">
+        //AJAX requests will always get the csrftoken
+        $(document).ajaxSend(function (event, jqxhr, settings) {
+            jqxhr.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+        });
+        let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+        scanner.addListener('scan', function (content) {
+
+            //ajax request to server
+            $.ajax({
+            type : "POST",
+            url: "",
+            data: {
+                code: content,
+            },
+            success:function(){redir(content);},
+
+        });
+        
+        function redir(code){
+            window.location = '/set_visit/'+code;       
+        }
+
+        console.log(content);
+        });
+        Instascan.Camera.getCameras().then(function (cameras) {
+        if (cameras.length > 0) {
+            scanner.start(cameras[0]);
+        } else {
+            console.error('No cameras found.');
+        }
+        }).catch(function (e) {
+            console.error(e);
+        });
+    </script>
+
+
+</html>
