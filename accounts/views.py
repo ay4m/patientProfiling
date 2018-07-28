@@ -82,7 +82,7 @@ class LabRegister(View):
 
 	@LoggedInAs(['Hospital'])
 	def get(self, request):
-	#must be logged in as Lab
+	#must be logged in as Hospital
 	#to register a Lab
 		form = LabRegisterForm()
 		return render(request, self.template, {'type': 'Lab', 'form': form})
