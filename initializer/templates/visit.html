@@ -4,18 +4,24 @@
 	<title>Visit Information</title>
 </head>
 <body>
-	{% if form %}
-		<form action="" method="post">
-		{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit" value="Submit">
-		</form>
+	{% if error %}
+		{{error}}
 	{% else %}
-		<p>
-			Unique Number : {{ unique_num }}<br>
-			Doctor : {{ doctor.get_full_name }}<br>
-			Specialty : {{ doctor.specialty }}<br>
-			Patient : {{ user }}
-	{% endif %}		
+		{% if form %}
+			<form action="" method="post">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit" value="Submit">
+			</form>
+		{% else %}
+			<p>
+				{% load staticfiles %}
+				<img src=" {% static unique_num %}"><br>
+				Doctor : {{ doctor.get_full_name }}<br>
+				Specialty : {{ doctor.specialty }}<br>
+				Patient : {{ user }}
+			</p>
+		{% endif %}
+	{% endif %}
 </body>
 </html>

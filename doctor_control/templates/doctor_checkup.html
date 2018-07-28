@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	{%if form%}
+		<form action="" method="post">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit" value="Submit">
+		</form>
+	{% else %}
+		<p>
+			Prescriptions: {{prescription}}<br>
+			Comments: {{comments}}
+		</p>
+	{% endif %}
+</body>
+</html>

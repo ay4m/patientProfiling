@@ -30,15 +30,31 @@
             data: {
                 code: content,
             },
-            success:function(){redir(content);},
+            success:function(data){
+                var tail = data.split('=')[1];
+                var user_timestamp = tail.split('<')[0];
+                user_timestamp = user_timestamp.split('.')[0]
+                redir(user_timestamp);
+            },
 
         });
+        // $.post("", {code:content}, function(data){
+        //     alert(data)
+        //     console.log(data)
+        //     if(data.success){
+        //         redir(data.user);
+        //     }else{
+        //         console.log('invalid QR')
+        //     }
+        // }).done(function(data){
+        //     console.log(data);
+        // }).fail(function(){
+        //     console.log('error')
+        // })
         
-        function redir(code){
-            window.location = '/set_visit/'+code;       
+        function redir(user_timestamp){
+            window.location = '/set_visit/' + user_timestamp;       
         }
-
-        console.log(content);
         });
         Instascan.Camera.getCameras().then(function (cameras) {
         if (cameras.length > 0) {

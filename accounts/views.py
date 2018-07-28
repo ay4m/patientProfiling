@@ -44,6 +44,8 @@ class DoctorRegister(View):
 
 	@LoggedInAs(['Hospital'])
 	def get(self, request):
+	#must be logged in as Hospital
+	#to register a doctor
 		form = DoctorRegisterForm()
 		return render(request, self.template, {'type': 'Doctor', 'form': form})
 
@@ -80,6 +82,8 @@ class LabRegister(View):
 
 	@LoggedInAs(['Hospital'])
 	def get(self, request):
+	#must be logged in as Lab
+	#to register a Lab
 		form = LabRegisterForm()
 		return render(request, self.template, {'type': 'Lab', 'form': form})
 
@@ -112,6 +116,7 @@ def user_type(user, type):
 		return True
 	
 	return False
+
 
 class HospitalLogin(View):
 	template = 'login.html'

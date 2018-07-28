@@ -1,16 +1,27 @@
 from time import time
 from random import choice as randomChoice
+from os import mkdir
 
+import barcode
 from django.shortcuts import render
 
 #Include model of the user account
+
 from accounts.models import UserAccount, HospitalAccount
-from .forms import VisitForm
+from accounts.decorators import logged_in_as
+from .forms import VisitForm ,IntermediateForm
 from .models import visit, qr_map
+from patientProfiling.settings import BASE_DIR
 
-def stringKeyGenerator(length=16):
-  return ''.join(randomChoice('0123456789ABCDEF') for x in range (length))
+def stringKeyGenerator(length=16, use_alpha=False):
+  key_set = '0123456789'
 
+  if use_alpha:
+    key_set = '0123456789ABCDEF'
+
+  return ''.join(randomChoice(key_set) for x in range (length))
+
+@logged_in_as(['Hospital'])
 def qr_mapper(request):
   error=None
   if request.method == "POST":
@@ -22,35 +33,37 @@ def qr_mapper(request):
           user = None
 
         if user:
-            timestamp = str(time())
+          timestamp = str(time())
 
-            unique_num = stringKeyGenerator(length=10)
-            #generate a unique number of length 10
+          unique_num = stringKeyGenerator(length=13)
+          #generate a unique number of length 13
 
-            while True:
-            	#if record with generated unique number already exists,
-            	#generate another unique number.
-              try:
-                qr_map.objects.get(unique_num=unique_num)
-                unique_num = StringKeyGenerator(length=10)
-              except:
-                break
+          while True:
+            #if record with generated unique number already exists,
+            #generate another unique number.
+            try:
+              qr_map.objects.get(unique_num=unique_num)
+              unique_num = stringKeyGenerator(length=13)
+            except:
+              break
 
-            qr_map.objects.create(user_id=user,
-                                  unique_num=unique_num,
-                                  timestamp=timestamp)
+          qr_map.objects.create(user_id=user,
+                                unique_num=unique_num,
+                                timestamp=timestamp)
 
-            form = VisitForm(initial={'unique_num': unique_num})
+          user_timestamp = str(user) + '_' + timestamp
 
-            return render(request, 'visit.html', {'form': form})
+          return render(request, 'intermediate.html', {'user_timestamp': user_timestamp})
 
         else:
             error = 'User Not Found'
-            print("Error")
+            print('Error')
 
   return render(request,'qrscan.html',{'error': error})
 
-def set_visit(request, user_id):
+
+@logged_in_as(['Hospital'])
+def set_visit(request, user_timestamp):
     if request.method =="POST" :
         form = VisitForm(request.POST)
 
@@ -64,29 +77,51 @@ def set_visit(request, user_id):
             user = qrMap_obj.user_id
             timestamp = qrMap_obj.timestamp
 
-            visit_id = stringKeyGenerator(length=16)
+            visit_id = stringKeyGenerator(length=16, use_alpha=True)
                 
             while True:     
                 try:
                   visit.objects.get(visit_id=visit_id)
-                  visit_id = stringKeyGenerator(length=16)
+                  visit_id = stringKeyGenerator(length=16, use_alpha=True)
                 except:
                   break
 
-            #hospital=request.user
-            hospital=HospitalAccount.objects.get(id='hosp1')
-            print(visit_id, user, doctor, timestamp)
+            hospital=request.user
+
             visit_record = visit.objects.create(visit_id=visit_id,
                                                 user_id=user,
                                                 hospital=hospital,
                                                 doctor=doctor,
                                                 timestamp=timestamp)
 
-            return render(request, 'visit.html', {'unique_num':unique_num, 'doctor': doctor, 'user': user.get_full_name()})
+            static_path = BASE_DIR + '/initializer/static/'
+            save_path = static_path + str(user)
+            
+            try:              
+              mkdir(save_path) 
+            except:
+              pass
 
-    qrMap = qr_map.objects.filter(user_id=user_id).order_by('timestamp').reverse()[0]
+            file_path = save_path + '/' + user_timestamp
+
+            EAN = barcode.get_barcode_class('ean13')
+            ean = EAN(unique_num, writer=barcode.writer.ImageWriter())
+
+            ean.save(file_path)
+
+            unique_num = str(user) + '/' + user_timestamp + '.png'
+
+            return render(request, 'visit.html', {'unique_num': unique_num, 'doctor': doctor, 'user': user.get_full_name()})
+
+    user_id, timestamp = user_timestamp.split('_')
+    
+    try:
+      qrMap = qr_map.objects.get(user_id=user_id,
+                                 timestamp__startswith=timestamp+'.')
+    except:
+      return render(request, 'visit.html', {'error' : 'Invalid request'})
+
     unique_num = qrMap.unique_num
     form = VisitForm(initial={'unique_num': unique_num})
+  
     return render(request, 'visit.html', {'form': form})
-
-

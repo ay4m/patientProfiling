@@ -7,3 +7,6 @@ class VisitForm(forms.ModelForm):
 	class Meta:
 		model = visit
 		fields = ['doctor']
+
+class IntermediateForm(forms.Form):
+	user_timestamp = forms.CharField()

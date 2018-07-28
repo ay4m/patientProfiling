@@ -24,5 +24,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('accounts.urls')),
     path('scan/', qr_mapper),
-    path('set_visit/<slug:user_id>', set_visit)
+    path('set_visit/<slug:user_timestamp>', set_visit),
 ]

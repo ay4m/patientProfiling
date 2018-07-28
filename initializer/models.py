@@ -15,5 +15,5 @@ class visit(models.Model):
 
 class qr_map(models.Model):
 	user_id = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
-	unique_num = models.CharField(primary_key=True , max_length=10, editable=False)
+	unique_num = models.CharField(primary_key=True , max_length=13, editable=False)
 	timestamp = models.CharField(max_length=25)

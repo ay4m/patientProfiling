@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 
 class LoggedInAs:
 	#use as decorator for functions
-	#inside Class-Based Views having 'self' parameter
+	#inside Class-Based Views i.e. having 'self' parameter
 	def __init__(self, accounts):
 		self.accounts=[]
 		[self.accounts.append(account+'Account') for account in accounts]
@@ -27,7 +27,7 @@ class LoggedInAs:
 
 class logged_in_as:
 	#use as decorator for
-	#function views not having 'self' parameter
+	#function views i.e. not having 'self' parameter
 	def __init__(self, accounts):
 		self.accounts=[]
 		[self.accounts.append(account+'Account') for account in accounts]
