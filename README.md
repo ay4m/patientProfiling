@@ -7,6 +7,8 @@ psycopg2 (for Postgres),
 
 qrcode 6.0 ( pip install qrcode[pil] )
 
+python-barcode (pip install python-barcode)
+
 To start the system:
 
 1> First, create a file local_settings.py in same folder where settings.py is

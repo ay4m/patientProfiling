@@ -44,9 +44,6 @@ class BaseAccountManager(BaseUserManager):
 		if not kwargs.get('sex', None):
 			raise ValueError('sex field is required')
 
-		if not kwargs.get('qr', None):
-			raise ValueError('qr field is required')
-
 		account = UserAccount(id=id,
 							  first_name=kwargs.get('first_name'),
 							  middle_name=kwargs.get('middle_name', ''),
