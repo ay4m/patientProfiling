@@ -7,6 +7,11 @@ psycopg2 (for Postgres),
 
 qrcode 6.0 ( pip install qrcode[pil] )
 
+django_crontab(pip install django-crontab) : after installing, add 'django_crotab' to INSTALLED_APPS in settings.py
+
+For more info: https://github.com/kraiz/django-crontab
+
+
 To start the system:
 
 1> First, create a file local_settings.py in same folder where settings.py is

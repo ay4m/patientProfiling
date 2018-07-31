@@ -40,9 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_crontab',
     'accounts',
     'initializer',
-    #'Profiling',
+    'Profiling',
     'barcode_app',
     'doctor_control',
 ]
@@ -73,6 +74,10 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+CRONJOBS = [
+    ('*/1 * * * *', 'initializer.cron.delete_expired_qr_maps'),
 ]
 
 WSGI_APPLICATION = 'patientProfiling.wsgi.application'

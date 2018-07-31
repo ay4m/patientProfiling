@@ -38,5 +38,6 @@ urlpatterns = [
     path('set_visit/<slug:user_timestamp>', set_visit),
     #path('profile/<slug:user_id>', index),
     path('barcode/', barcode_view),
-    path('add_record/<slug:unique_num>', redirect_append)
+    path('add_record/<slug:unique_num>', redirect_append),
+    path('profile/', include ('Profiling.urls')),
 ]
