@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
@@ -8,9 +8,10 @@ from django.core.exceptions import PermissionDenied
 from accounts.forms import LoginForm, UserRegisterForm
 from accounts.models import UserAccount, HospitalAccount, DoctorAccount, LabAccount
 from accounts.decorators import LoggedInAs
+from Profiling.views import profile
 
 class UserRegister(View):
-	template = 'register.html'
+	template = 'accounts/register.html'
 
 	def get(self, request):
 		form = UserRegisterForm()
@@ -18,7 +19,7 @@ class UserRegister(View):
 
 	def post(self, request):
 		form = UserRegisterForm(request.POST)
-		
+
 		if form.is_valid():
 			formData = form.cleaned_data
 			UserAccount.objects.create_user(id=formData['id'],
@@ -34,13 +35,13 @@ class UserRegister(View):
 						Thank you for registering.
 						Login to use your account.
 					  """
-			return render(request, 'patientProfiling/templates/thankyou.html', {'message': Message})
+			return render(request, 'accounts/register-thankyou.html', {'message': message})
 
 		return render(request, self.template, {'type': 'User', 'form': form})
 
 
 class DoctorRegister(View):
-	template = 'register.html'
+	template = 'accounts/register.html'
 
 	@LoggedInAs(['Hospital'])
 	def get(self, request):
@@ -72,13 +73,13 @@ class DoctorRegister(View):
 						Thank you for registering.
 						Login to use your account.
 					  """
-			return render(request, 'patientProfiling/templates/thankyou.html', {'message': message})
+			return render(request, 'accounts/register-thankyou.html', {'message': message})
 
 		return render(request, self.template, {'type': 'Doctor', 'form': form})
 
 
 class LabRegister(View):
-	template = 'register.html'
+	template = 'accounts/register.html'
 
 	@LoggedInAs(['Hospital'])
 	def get(self, request):
@@ -102,24 +103,24 @@ class LabRegister(View):
 						Thank you for registering.
 						Login to use your account.
 					  """
-			return render(request, 'patientProfiling/templates/thankyou.html', {'message': message})
+			return render(request, 'accounts/register-thankyou.html', {'message': message})
 
 		return render(request, self.template, {'type': 'Lab', 'form': form})
 
 
-################################## Login Views ################################ 
+################################## Login Views ################################
 
 def user_type(user, type):
 	type = type + 'Account'
-	
+
 	if user.__class__.__name__ == type:
 		return True
-	
+
 	return False
 
 
 class HospitalLogin(View):
-	template = 'login.html'
+	template = 'accounts/login.html'
 
 	def get(self, request):
 		form = LoginForm()
@@ -140,11 +141,11 @@ class HospitalLogin(View):
 
 			login(request, user)
 
-			return render(request, 'patientProfiling/templates/thankyou.html', {'message': 'Login successful'})
+			return render(request, 'accounts/login-thankyou.html', {'message': 'Login successful'})
 
 
 class UserLogin(View):
-	template = 'login.html'
+	template = 'accounts/login.html'
 
 	def get(self, request):
 		form = LoginForm()
@@ -162,14 +163,14 @@ class UserLogin(View):
 
 			if user_type(user, 'User') or user_type(user, 'Doctor'):
 				login(request, user)
-				return render(request, 'patientProfiling/templates/thankyou.html', {'message': 'Login successful'})
+				return  redirect('profile', user_id= id)
 
 			error = 'Invalid Credentials'
 
 		return render(request, self.template, {'type':'User', 'form': form, 'error': error})
 
 class DoctorLogin(View):
-	template = 'login.html'
+	template = 'accounts/login.html'
 
 	def get(self, request):
 		form = LoginForm()
@@ -187,14 +188,14 @@ class DoctorLogin(View):
 
 			if user_type(user, 'Doctor'):
 				login(request, user)
-				return render(request, 'patientProfiling/templates/thankyou.html', {'message': 'Login successful'})
+				return render(request, 'accounts/login-thankyou.html', {'message': 'Login successful'})
 
 			error = 'Invalid Credentials'
 
 		return render(request, self.template, {'type':'User', 'form': form, 'error': error})
 
 class LabLogin(View):
-	template='login.html'
+	template='accounts/login.html'
 
 	@LoggedInAs(['Hospital'])
 	def get(self, request):
@@ -209,13 +210,13 @@ class LabLogin(View):
 			formData = form.cleaned_data
 			id = formData['id']
 			password = formData['password']
-			
+
 			user = authenticate(id=id, password=password)
 
 			if user_type(user, 'Lab'):
 				logout(request)
 				login(request, user)
-				return render(request, 'patientProfiling/templates/thankyou.html', {'message': 'Login successful'})
+				return render(request, 'accounts/login-thankyou.html', {'message': 'Login successful'})
 
 			raise PermissionDenied
 

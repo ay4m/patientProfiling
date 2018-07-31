@@ -11,6 +11,7 @@ django_crontab(pip install django-crontab) : after installing, add 'django_crota
 
 For more info: https://github.com/kraiz/django-crontab
 
+widget_tweaks(pip install django-widget-tweaks) : after installing, add 'widget_tweaks' to INSTALLED_APPS in settings.py
 
 To start the system:
 

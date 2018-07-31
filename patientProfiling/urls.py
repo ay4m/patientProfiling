@@ -23,11 +23,13 @@ from initializer.views import qr_mapper, set_visit
 #from Profiling.views import index
 from barcode_app.views import barcode_view
 from doctor_control.views import add_record as doctor_addRecord
+#from labpost.views import add_record as lab_addRecord
 
 def redirect_append(request, unique_num):
 	if user_type(request.user, 'Doctor'):
 		return doctor_addRecord(request, unique_num)
 	#elif user_type(request.user, 'Lab'):
+	#	return lab_addRecord(request, unique_num)
 	raise PermissionDenied
 
 urlpatterns = [

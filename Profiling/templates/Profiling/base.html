@@ -32,7 +32,6 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<img src="{% static 'Profiling/profile-bg.jpg' %}"/>
 
 <body class="fix-header fix-sidebar card-no-border">
     <!-- ============================================================== -->
@@ -94,7 +93,7 @@
                         <!-- Profile -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/images/users/1.jpg" alt="user" class="profile-pic m-r-10" />Barun Pandey</a>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static 'Profiling/assets/images/users/1.png' %}" alt="user" class="profile-pic m-r-10" /> {{profileobject.first_name}} {{profileobject.last_name}}</a>
                         </li>
                     </ul>
                 </div>

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'Profiling',
     'barcode_app',
     'doctor_control',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -77,7 +78,7 @@ TEMPLATES = [
 ]
 
 CRONJOBS = [
-    ('*/1 * * * *', 'initializer.cron.delete_expired_qr_maps'),
+    ('*/1 0 * * *', 'initializer.cron.delete_expired_qr_maps'),
 ]
 
 WSGI_APPLICATION = 'patientProfiling.wsgi.application'

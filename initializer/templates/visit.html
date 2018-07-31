@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends 'Profiling/baseinitializer.html' %}
+
+{% block content %}
 	<title>Visit Information</title>
-</head>
+
 <body>
 	{% if error %}
 		{{error}}
@@ -23,5 +23,7 @@
 			</p>
 		{% endif %}
 	{% endif %}
+
 </body>
-</html>
+
+{% endblock %}

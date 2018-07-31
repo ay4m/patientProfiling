@@ -1,5 +1,5 @@
 {% extends 'Profiling/base.html' %}
-
+{% load widget_tweaks %}
 
 {% load static %}
 
@@ -29,7 +29,7 @@
                     <div class="col-lg-4 col-xlg-3 col-md-5">
                         <div class="card">
                             <div class="card-block">
-                                <center class="m-t-30"> <img src="{% static 'Profiling/assets/images/users/5.jpg' %}" class="img-circle" width="150" />
+                                <center class="m-t-30"> <img src="{% static 'Profiling/assets/images/users/1.png' %}" class="img-circle" width="150" />
                                     <h4 class="card-title m-t-10"><strong> {{profileobject.first_name}} {{profileobject.last_name}} </strong> </h4>
                                     <h6 class="card-subtitle">Date of birth: {{profileobject.dob}}</h6>
                                 </center>
@@ -39,10 +39,21 @@
                     <!-- Column -->
                     <!-- Column -->
                     <div class="col-lg-8 col-xlg-9 col-md-7">
-                      <div class="card">
+                      <div class="card form_edit">
                         <form method="POST" class="post-form">{% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="save btn btn-default">Save</button>
+                          {% for hidden_field in form.hidden_fields %}
+                        	{{ hidden_field }}
+                        {% endfor %}
+                        {% for field in form.visible_fields %}
+                        	<div class="form-group">
+                        		{{ field.label_tag }}
+                        		{% render_field field class="form-control" %}
+                        		{% if field.help_text %}
+                        			<small class="form-text text-muted">{{ field.help_text }}</small>
+                        		{% endif %}
+                        	</div>
+                        {% endfor %}
+    <center> <button type="submit" class="save btn btn-lg btn-primary">Save</button> </center>
                           </div>
                     </div>
                     <!-- Column -->

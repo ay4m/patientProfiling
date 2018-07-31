@@ -8,7 +8,7 @@ from initializer.models import visit, qr_map
 
 def add_record(request, unique_num):
 	try:
-		qrMapObj = qr_map.objects.get(unique_num=unique_num)
+		qrMapObj = qr_map.objects.get(unique_num__startswith=unique_num[:-1])
 	except:
 		#no record for the given unique_num
 		return render(request, 'barcode_app/templates/barcode.html' , {'error': 'Invalid barcode'})
@@ -22,8 +22,7 @@ def add_record(request, unique_num):
 			formData = form.cleaned_data
 			prescription = formData['prescription']
 			comments = formData['comments']
-
-			qrMapObj = qr_map.objects.get(unique_num=unique_num)
+			
 			
 			visit_id = visit.objects.get(user_id=qrMapObj.user_id,
 										 timestamp=qrMapObj.timestamp)

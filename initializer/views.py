@@ -4,6 +4,7 @@ from os import mkdir
 
 import barcode
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 
 #Include model of the user account
 
@@ -21,6 +22,7 @@ def stringKeyGenerator(length=16, use_alpha=False):
 
   return ''.join(randomChoice(key_set) for x in range (length))
 
+@csrf_exempt
 @logged_in_as(['Hospital'])
 def qr_mapper(request):
   error=None
@@ -36,6 +38,7 @@ def qr_mapper(request):
           timestamp = str(time())
 
           unique_num = stringKeyGenerator(length=13)
+          print(unique_num)
           #generate a unique number of length 13
 
           while True:
@@ -71,6 +74,7 @@ def set_visit(request, user_timestamp):
             formData = form.cleaned_data
 
             unique_num = formData['unique_num']
+            print(unique_num)
             doctor = formData['doctor']
             qrMap_obj = qr_map.objects.get(unique_num=unique_num)
 

@@ -18,7 +18,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    #path('<int:user_id>/', views.index, name='index'),
+    path('<slug:user_id>/', views.index, name='index'),
     path('<slug:user_id>/id/', views.profile, name='profile'),
     path('<slug:user_id>/id/edit/',views.get_profile, name='get_profile'),
     #path('<int:user_id>/timeline/',views.timeline, name='timeline'),

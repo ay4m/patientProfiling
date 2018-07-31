@@ -1,13 +1,15 @@
+{% extends 'Profiling/baseinitializer.html' %}
 {% load staticfiles %}
-<html>
-    <head>
 
-    </head>
-        <script type="text/javascript" src="{% static 'instascan.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'jquery.js' %}"></script>
 
+
+
+{% block content %}
 
     <body>
+
+      <script type="text/javascript" src="{% static 'instascan.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'jquery.js' %}"></script>
 
         <div align="left">
             <video id="preview" height="500px" width="500px"></video>
@@ -15,6 +17,8 @@
 
 
     </body>
+
+    <h1> Please scan your QR Code to continue </h1> 
     <script type="text/javascript">
         //AJAX requests will always get the csrftoken
         $(document).ajaxSend(function (event, jqxhr, settings) {
@@ -51,9 +55,9 @@
         // }).fail(function(){
         //     console.log('error')
         // })
-        
+
         function redir(user_timestamp){
-            window.location = '/set_visit/' + user_timestamp;       
+            window.location = '/set_visit/' + user_timestamp;
         }
         });
         Instascan.Camera.getCameras().then(function (cameras) {
@@ -67,5 +71,4 @@
         });
     </script>
 
-
-</html>
+    {% endblock %}

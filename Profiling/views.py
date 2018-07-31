@@ -4,10 +4,11 @@ from django.http import Http404
 from accounts.models import UserAccount
 #from .models import MedicalHistory, AppointmentList, PrescriptionsList
 from .forms import UserAccountForm
-#from accounts.models import UserAccount
-#def index(request, user_id):
-#    profileobject= UserAccount.objects.get(pk=user_id)
-    #return render(request,'Profiling/index.html', {'profileobject': profileobject})
+
+
+def index(request, user_id):
+    profileobject= UserAccount.objects.get(pk=user_id)
+    return render(request,'Profiling/index.html', {'profileobject': profileobject})
 
 
 def profile(request, user_id):
@@ -23,8 +24,8 @@ def get_profile(request, user_id):
     if request.method == 'POST':
         form = UserAccountForm(request.POST, instance=profileobject)
         if form.is_valid():
-            profile_ob= form.save(commit=False)
-            profile_ob.save()
+            profileobject= form.save(commit=False)
+            profileobject.save()
             return redirect('profile', user_id=profileobject.pk)
     else:
         form = UserAccountForm(instance=profileobject)

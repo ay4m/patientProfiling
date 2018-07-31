@@ -16,7 +16,7 @@ def delete_expired_qr_maps():
 		t = float(obj.timestamp)
 		record_time = datetime.fromtimestamp(t)
 		
-		if (current_time-record_time).seconds/60 >= 1:
+		if (current_time-record_time).days >= 7:
 			user_timestamp = str(obj.user_id) + '_' + obj.timestamp.split('.')[0]
 			file_name = user_timestamp+'.png'
 			file_path = BASE_DIR + '/initializer/static/' + str(obj.user_id) + '/' + file_name
