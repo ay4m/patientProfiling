@@ -157,7 +157,7 @@ class UserLogin(View):
 			formData = form.cleaned_data
 			id = formData['id']
 			password = formData['password']
-			print(id, password)
+
 			user = authenticate(id=id, password=password)
 
 			if user_type(user, 'User') or user_type(user, 'Doctor'):

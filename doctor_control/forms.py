@@ -4,7 +4,7 @@ from .models import doctor_checkup
 from initializer.models import qr_map
 
 class DoctorCheckupForm(forms.ModelForm):
-	unique_num = forms.CharField(max_length=10)
+	unique_num = forms.CharField(widget = forms.HiddenInput())
 
 	class Meta:
 		model = doctor_checkup

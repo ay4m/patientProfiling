@@ -53,7 +53,7 @@ def qr_mapper(request):
 
           user_timestamp = str(user) + '_' + timestamp
 
-          return render(request, 'intermediate.html', {'user_timestamp': user_timestamp})
+          return render(request, 'intermediate.html', {'redirect': user_timestamp})
 
         else:
             error = 'User Not Found'

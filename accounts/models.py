@@ -84,9 +84,6 @@ class BaseAccountManager(BaseUserManager):
 		if not kwargs.get('specialty', None):
 			raise ValueError('specialty field is required')
 
-		if not kwargs.get('qr', None):
-			raise ValueError('qr field is required')
-
 		account = DoctorAccount(id=id,
 							  first_name=kwargs.get('first_name'),
 							  middle_name=kwargs.get('middle_name', ''),

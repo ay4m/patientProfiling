@@ -16,15 +16,15 @@ class AccountsBackend(ModelBackend):
 		except:
 			pass
 		try:
-			person_user = UserAccount.objects.get(pk=user.pk)
-			return person_user
-		except:
-			pass
-		try:
 			doctor_user = DoctorAccount.objects.get(pk=user.pk)
 			return doctor_user
 		except:
 			pass
+		try:
+			person_user = UserAccount.objects.get(pk=user.pk)
+			return person_user
+		except:
+			pass			
 		try:
 			lab = LabAccount.objects.get(pk=user.pk)
 			return lab

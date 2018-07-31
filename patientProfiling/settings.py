@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'initializer',
+    #'Profiling',
+    'barcode_app',
+    'doctor_control',
 ]
 
 MIDDLEWARE = [
