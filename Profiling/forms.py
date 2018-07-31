@@ -1,8 +1,8 @@
 from django import forms
-from .models import *
+from accounts.models import UserAccount
 from django.forms import ModelForm
 
-class AccountForm(ModelForm):
+class UserAccountForm(ModelForm):
     class Meta:
-        model= Account
-        fields = ['profile_name', 'user_id', 'email', 'password', 'phone_number', 'message']
+        model= UserAccount
+        fields = ['first_name', 'middle_name', 'last_name', 'dob', 'sex', 'phone_num','email', 'qr']
