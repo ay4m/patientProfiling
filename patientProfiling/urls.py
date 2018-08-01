@@ -27,7 +27,7 @@ from doctor_control.views import add_record as doctor_addRecord
 
 def redirect_append(request, unique_num):
 	if user_type(request.user, 'Doctor'):
-		return doctor_addRecord(request, unique_num)
+	       return doctor_addRecord(request, unique_num)
 	#elif user_type(request.user, 'Lab'):
 	#	return lab_addRecord(request, unique_num)
 	raise PermissionDenied
@@ -36,10 +36,10 @@ urlpatterns = [
 	path('home/',TemplateView.as_view(template_name='patientProfiling/templates/index.html'), name='home'),
     path('admin/', admin.site.urls),
     path('account/', include('accounts.urls')),
-    path('qr_scan/', qr_mapper),
+    path('scan/', qr_mapper),
     path('set_visit/<slug:user_timestamp>', set_visit),
     #path('profile/<slug:user_id>', index),
-    path('barcode_scan/', barcode_view),
+    path('barcode/', barcode_view),
     path('add_record/<slug:unique_num>', redirect_append),
     path('profile/', include ('Profiling.urls')),
 ]

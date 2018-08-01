@@ -21,8 +21,8 @@ urlpatterns = [
     path('<slug:user_id>/', views.index, name='index'),
     path('<slug:user_id>/id/', views.profile, name='profile'),
     path('<slug:user_id>/id/edit/',views.get_profile, name='get_profile'),
-    #path('<int:user_id>/timeline/',views.timeline, name='timeline'),
-    #path('<int:user_id>/appointments/', views.appointments, name='appointments'),
-    #path('<int:user_id>/labreports/', views.labreports, name='labreports'),
-    #path('<int:user_id>/prescriptions/', views.prescriptions, name='prescriptions'),
+    path('<slug:user_id>/timeline/',views.timeline, name='timeline'),
+    path('<slug:user_id>/appointments/', views.appointments, name='appointments'),
+    #path('<slug:user_id>/labreports/', views.labreports, name='labreports'),
+    path('<slug:user_id>/prescriptions/', views.prescriptions, name='prescriptions'),
 ]

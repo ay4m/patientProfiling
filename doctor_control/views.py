@@ -22,8 +22,8 @@ def add_record(request, unique_num):
 			formData = form.cleaned_data
 			prescription = formData['prescription']
 			comments = formData['comments']
-			
-			
+
+
 			visit_id = visit.objects.get(user_id=qrMapObj.user_id,
 										 timestamp=qrMapObj.timestamp)
 

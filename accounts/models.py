@@ -36,16 +36,16 @@ class BaseAccountManager(BaseUserManager):
 			raise ValueError('first_name field is required')
 
 		if not kwargs.get('last_name', None):
-			raise ValueError('last_name field is required')			
-		
+			raise ValueError('last_name field is required')
+
 		if not kwargs.get('dob', None):
 			raise ValueError('dob field is required')
 
 		if not kwargs.get('sex', None):
 			raise ValueError('sex field is required')
 
-		if not kwargs.get('qr', None):
-			raise ValueError('qr field is required')
+		#if not kwargs.get('qr', None):
+		#	raise ValueError('qr field is required')
 
 		account = UserAccount(id=id,
 							  first_name=kwargs.get('first_name'),
@@ -73,8 +73,8 @@ class BaseAccountManager(BaseUserManager):
 			raise ValueError('first_name field is required')
 
 		if not kwargs.get('last_name', None):
-			raise ValueError('last_name field is required')			
-		
+			raise ValueError('last_name field is required')
+
 		if not kwargs.get('dob', None):
 			raise ValueError('dob field is required')
 
@@ -157,6 +157,3 @@ class UserAccount(BaseAccount):
 
 class DoctorAccount(UserAccount):
 	specialty = models.CharField(max_length=20)
-
-	def __str__(self):
-		return ' '.join([self.first_name, self.middle_name, self.last_name])
