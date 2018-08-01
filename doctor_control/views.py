@@ -27,9 +27,15 @@ def add_record(request, unique_num):
 			visit_id = visit.objects.get(user_id=qrMapObj.user_id,
 										 timestamp=qrMapObj.timestamp)
 
-			visit.objects.create(visit_id=visit_id,
-								 prescription=prescription,
-								 comments=comments)
+			try:
+				checkup_object = doctor_checkup.objects.get(visit_id=visit_id)
+				checkup_object.prescription = checkup_object.prescription + '\n' + prescription
+				checkup_object.comments = checkup_object.comments + '\n' + comments
+				checkup_object.save()
+			except:
+				doctor_checkup.objects.create(visit_id=visit_id,
+											  prescription=prescription,
+											  comments=comments)
 
 			return render(request, 'doctor_checkup.html', {'prescription': prescription,
 															'comments': comments}

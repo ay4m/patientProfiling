@@ -157,3 +157,6 @@ class UserAccount(BaseAccount):
 
 class DoctorAccount(UserAccount):
 	specialty = models.CharField(max_length=20)
+
+	def __str__(self):
+		return ' '.join([self.first_name, self.middle_name, self.last_name])

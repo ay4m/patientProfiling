@@ -13,7 +13,8 @@ class DoctorCheckupForm(forms.ModelForm):
 	def clean_unique_num(self):
 		unique_num = self.cleaned_data['unique_num']
 		try:
-			qr_map.objects.get(unique_num=unique_num)
+			print(unique_num[:-1])
+			qr_map.objects.get(unique_num__startswith=unique_num[:-1])
 			return unique_num
 		except:
 			raise forms.ValidationError('Unique number %s does not exist'%(unique_num))

@@ -38,7 +38,6 @@ def qr_mapper(request):
           timestamp = str(time())
 
           unique_num = stringKeyGenerator(length=13)
-          print(unique_num)
           #generate a unique number of length 13
 
           while True:
@@ -74,7 +73,6 @@ def set_visit(request, user_timestamp):
             formData = form.cleaned_data
 
             unique_num = formData['unique_num']
-            print(unique_num)
             doctor = formData['doctor']
             qrMap_obj = qr_map.objects.get(unique_num=unique_num)
 
