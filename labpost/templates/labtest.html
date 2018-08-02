@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+<!-- This template is used to generate input foem 
+for lab test input to patient's account -->
+
+<!--the title-->
+{% block title %} Hospital Lab {% endblock %}
+
+<!--page content-->
+{% block page %}
+
+<h1>This is the test page from {{ request.get_full_path }}</h1>
+
+<!--TEST RECORD INPUT FORM-->
+<div id="labtest" class="container col-sm-5">
+    <div id="patient_info" class="col bg-success text-white">
+        <p class="col text-center"> Patient's Name : {{ user }}</p>
+        <p class="col text-center"> {{ date }}</p>
+    </div>
+    <form action="" method="POST">
+        {% csrf_token %} {{ formset.management_form }}
+
+
+        <table class="table border">
+
+            <thead class="thead">
+                <tr class="row mx-auto">
+                    <th scope="col" class="col-sm"> Test </th>
+                    <th scope="col" class="col-sm"> Result </th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for form in formset %}
+                <tr class="recordItem row m-auto">
+                    {% for field in form %}
+                    <td class="p-1 mx-auto">
+                        {{ field }}
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+
+
+            </tbody>
+            <tr class="row mx-auto">
+
+                <td class="mx-auto">
+                    <button type="button" class="btn btn-primary btn-lg">Add Field</button>
+                </td>
+                <!-- <td class="mx-auto"><button type="button" class="btn btn-primary">Delete Field</button></td> -->
+                <td class="mx-auto" colspan="2">
+                    <input class="btn btn-success btn-lg" type="submit" value="Save" />
+                </td>
+            </tr>
+            <!-- <tr class="row mx-auto">
+            <td class="mx-auto" colspan="2">
+                <input class="btn btn-success btn-lg" type="submit" value="Save" />
+            </td>
+        </tr> -->
+
+        </table>
+    </form>
+</div>
+
+{% endblock %}

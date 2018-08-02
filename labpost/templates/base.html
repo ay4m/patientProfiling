@@ -1,0 +1,41 @@
+{% load static %}
+<!-- Base template for the project -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!--meta attributes-->
+    <meta name="viewport" content="width=device-width" , initial-scale=1>
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+
+<body>
+    <!--The main page-->
+    <div id="page" class="container-fluid">
+
+        <!--extend this block-->
+        {% block page %}
+        {% endblock %}
+
+    </div>
+    <!--id = page-->
+
+    <footer></footer>
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+<!-- Add field in test form
+<script src="{% static 'addform.js' %}"></script> -->
+
+</body>
+</html>

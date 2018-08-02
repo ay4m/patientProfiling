@@ -17,19 +17,22 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
 from django.core.exceptions import PermissionDenied
+from django.conf.urls.static import static
 
 from accounts.views import user_type
 from initializer.views import qr_mapper, set_visit
 #from Profiling.views import index
 from barcode_app.views import barcode_view
 from doctor_control.views import add_record as doctor_addRecord
-#from labpost.views import add_record as lab_addRecord
+from labpost.views import add_record as lab_addRecord
+from labpost.views import labReportInput, labReportGenerate, labImageReport
+from . import settings
 
 def redirect_append(request, unique_num):
 	if user_type(request.user, 'Doctor'):
 	       return doctor_addRecord(request, unique_num)
-	#elif user_type(request.user, 'Lab'):
-	#	return lab_addRecord(request, unique_num)
+	elif user_type(request.user, 'Lab'):
+		return lab_addRecord(request, unique_num)
 	raise PermissionDenied
 
 urlpatterns = [
@@ -42,5 +45,13 @@ urlpatterns = [
     #path('profile/<slug:user_id>', index),
     path('barcode/', barcode_view),
     path('add_record/<slug:unique_num>', redirect_append),
+    path('add_record/<slug:unique_num>/<slug:record_type>', labReportInput),
     path('profile/', include ('Profiling.urls')),
+
+    #report generating urls
+    path('report/<slug:visit_id>', labReportGenerate, name = 'labReportGenerate'),
+    path('imagereport/<slug:visit_id>', labImageReport, name='labImageReport'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

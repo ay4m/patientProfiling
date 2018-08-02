@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 
-from accounts.forms import LoginForm, UserRegisterForm
+from accounts.forms import *
 from accounts.models import UserAccount, HospitalAccount, DoctorAccount, LabAccount
 from accounts.decorators import LoggedInAs
 from Profiling.views import profile
@@ -36,6 +36,8 @@ class UserRegister(View):
 						Login to use your account.
 					  """
 			return render(request, 'accounts/register-thankyou.html', {'message': message})
+		else:
+			print('invalid form')
 
 		return render(request, self.template, {'type': 'User', 'form': form})
 
@@ -56,7 +58,8 @@ class DoctorRegister(View):
 
 		if form.is_valid():
 			formData = form.cleaned_data
-			UserAccount.objects.create_doctor(
+			print(formData['specialty'])
+			DoctorAccount.objects.create_doctor(
 											id=formData['id'],
 											password=formData['password'],
 											first_name=formData['first_name'],
@@ -66,7 +69,7 @@ class DoctorRegister(View):
 											sex=formData['sex'],
 											phone_num=formData.get('phone_num',''),
 											email=formData.get('email', ''),
-											speciality=formData['speciality']
+											specialty=formData['specialty']
 											)
 
 			message = """

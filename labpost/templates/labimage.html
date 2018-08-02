@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+<!-- This template is used to upload image files to
+patient's account -->
+
+{% block page %}
+
+<div id="labimage" class="container col-sm-5">
+    <div id="patient_info" class="col bg-success text-white">
+        <p class="col text-center"> {{ date }} </p>
+    </div>
+
+    <div class="col bg-light">
+        <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="row mx-auto form-group">
+                <label for= "{{field.name}}" class="">{{field.label}}</label>
+                {{field}}
+                {{field.help_text}}
+            </div>
+        {% endfor %}
+
+        <div class="row">
+            <input type="submit" class="mx-auto btn btn-success btn-lg" value="Upload"></input>
+        </div>
+
+
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}

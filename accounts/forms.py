@@ -18,20 +18,19 @@ class UserRegisterForm(forms.ModelForm):
 	def clean_phone_num(self):
 		phone_num = self.cleaned_data['phone_num']
 
-		if not phone_num.isdigit():
+		if phone_num == '':
+			return phone_num
+		elif not phone_num.isdigit():
 			raise forms.ValidationError('Invalid Phone Number')
 
 		return phone_num
 
 	def clean(self):
 		password = self.cleaned_data['password']
-		confirm_password = self.cleaned_data['password']
-
-		if len(password) < 8:
-			raise forms.ValidationError('Password must be at least 8 characters long')
+		confirm_password = self.cleaned_data['confirm_password']
 
 		if password != confirm_password:
-			raise forms.ValidationError('Password and Confirm Password')
+			raise forms.ValidationError('Password and Confirm Password do not match')
 
 	class Meta:
 		model = UserAccount
@@ -56,7 +55,7 @@ class UserRegisterForm(forms.ModelForm):
 		}
 
 class DoctorRegisterForm(UserRegisterForm):
-	specialty = forms.CharField(max_length=20)
+	specialty = forms.CharField(label='Specialty*',max_length=20)
 	class Meta:
 		model = DoctorAccount
 
@@ -85,10 +84,7 @@ class LabRegisterForm(forms.ModelForm):
 	
 	def clean(self):
 		password = self.cleaned_data['password']
-		confirm_password = self.cleaned_data['password']
-
-		if len(password) < 8:
-			raise forms.ValidationError('Password must be at least 8 characters long')
+		confirm_password = self.cleaned_data['confirm_password']
 
 		if password != confirm_password:
 			raise forms.ValidationError('Password and Confirm Password')

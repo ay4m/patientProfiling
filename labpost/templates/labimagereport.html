@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+<!-- This template is used to generate report of image files
+uploaded to patient's account -->
+
+{% block page %}
+
+<!-- Generate patient's image report files -->
+<div id="labImageReport" class="container col-sm-12">
+    <div id="patient_info" class="col bg-success text-white">
+    
+    </div>
+
+    <!-- generator goes here -->
+    <div class="col bg-light"> 
+        <div class="row mx-auto">
+            {% for test in testResult %}
+                <figure class="figure mx-auto border float-left">
+                    <img src="{{test.image.url}}" alt="{{test.tag}}" class="figure-img rounded">
+                    <figcaption class="figure-caption text-center font-weight-bold">{{test.description}}</figcaption>
+                </figure>
+            {% endfor %}
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock page %}
