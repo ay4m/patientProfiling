@@ -33,6 +33,7 @@ def redirect_append(request, unique_num):
 	raise PermissionDenied
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
 	path('home/',TemplateView.as_view(template_name='patientProfiling/templates/index.html'), name='home'),
     path('admin/', admin.site.urls),
     path('account/', include('accounts.urls')),

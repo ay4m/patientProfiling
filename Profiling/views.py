@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import Http404
+
 from accounts.models import UserAccount
 from doctor_control.models import doctor_checkup
 #from .models import MedicalHistory, AppointmentList, PrescriptionsList
-from .forms import UserAccountForm
 from initializer.models import visit
 
 
@@ -21,17 +21,17 @@ def profile(request, user_id):
     return render(request,'Profiling/profile.html',{'profileobject': profileobject})
 
 
-def get_profile(request, user_id):
-    profileobject = UserAccount.objects.get(pk=user_id)
-    if request.method == 'POST':
-        form = UserAccountForm(request.POST, instance=profileobject)
-        if form.is_valid():
-            profileobject= form.save(commit=False)
-            profileobject.save()
-            return redirect('profile', user_id=profileobject.pk)
-    else:
-        form = UserAccountForm(instance=profileobject)
-    return render(request, 'Profiling/profile-edit.html', {'form': form})
+# def get_profile(request, user_id):
+#     profileobject = UserAccount.objects.get(pk=user_id)
+#     if request.method == 'POST':
+#         form = UserAccountForm(request.POST, instance=profileobject)
+#         if form.is_valid():
+#             profileobject= form.save(commit=False)
+#             profileobject.save()
+#             return redirect('profile', user_id=profileobject.pk)
+#     else:
+#         form = UserAccountForm(instance=profileobject)
+#     return render(request, 'Profiling/profile-edit.html', {'form': form})
 
 def timeline(request, user_id):
     try:

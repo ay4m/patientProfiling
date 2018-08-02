@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import PermissionsMixin
 
 class BaseAccountManager(BaseUserManager):
 	def create_hospital(self, id, password, **kwargs):
@@ -123,9 +124,23 @@ class BaseAccountManager(BaseUserManager):
 
 		return account
 
+	def create_superuser(self, id, password, **kwargs):
+		account = BaseAccount(id=id,
+							  is_staff=True,
+							  is_admin=True,
+							  is_superuser=True,
+							  **kwargs)
+		
+		account.set_password(password)
 
-class BaseAccount(AbstractBaseUser):
+		account.save()
+
+class BaseAccount(AbstractBaseUser, PermissionsMixin):
 	id = models.CharField(max_length=12, primary_key=True)
+
+	is_admin = models.BooleanField(default=False)
+	is_staff = models.BooleanField(default=False)
+
 	objects = BaseAccountManager()
 	USERNAME_FIELD = 'id'
 

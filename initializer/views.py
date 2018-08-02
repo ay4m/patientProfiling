@@ -34,6 +34,7 @@ def qr_mapper(request):
         except:
           user = None
 
+        print(user)
         if user:
           timestamp = str(time())
 
@@ -60,7 +61,7 @@ def qr_mapper(request):
 
         else:
             error = 'User Not Found'
-            print('Error')
+            return render(request, 'intermediate.html', {'redirect': 'error'})
 
   return render(request,'qrscan.html',{'error': error})
 
