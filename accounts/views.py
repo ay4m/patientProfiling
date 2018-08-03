@@ -22,6 +22,11 @@ class UserRegister(View):
 
 		if form.is_valid():
 			formData = form.cleaned_data
+
+			img = None
+			if 'profile_image' in request.FILES:
+				img = request.FILES['profile_image']
+
 			UserAccount.objects.create_user(id=formData['id'],
 											password=formData['password'],
 											first_name=formData['first_name'],
@@ -30,7 +35,8 @@ class UserRegister(View):
 											dob=formData['dob'],
 											sex=formData['sex'],
 											phone_num=formData.get('phone_num',''),
-											email=formData.get('email', ''))
+											email=formData.get('email', ''),
+											profile_image= img)
 			message = """
 						Thank you for registering.
 						Login to use your account.
@@ -58,6 +64,11 @@ class DoctorRegister(View):
 
 		if form.is_valid():
 			formData = form.cleaned_data
+
+			img = None
+			if 'profile_image' in request.FILES:
+				img = request.FILES['profile_image']
+
 			DoctorAccount.objects.create_doctor(
 											id=formData['id'],
 											password=formData['password'],
@@ -68,7 +79,8 @@ class DoctorRegister(View):
 											sex=formData['sex'],
 											phone_num=formData.get('phone_num',''),
 											email=formData.get('email', ''),
-											specialty=formData['specialty']
+											specialty=formData['specialty'],
+											profile_image=img
 											)
 
 			message = """

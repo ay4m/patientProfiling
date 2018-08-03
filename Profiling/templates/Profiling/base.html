@@ -65,8 +65,7 @@
                         <!-- Logo text --><span>
 
                          <!-- Light Logo text -->
-                         <img src="{% static 'Profiling/assets/images/logo-light-text.png' %}" class="light-logo" alt="homepage" />
-                     </span> </a>
+                         <img src="{% static 'Profiling/assets/images/logo-light-text.png' %}" class="light-logo" alt="homepage" /></span> </a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -94,7 +93,7 @@
                         <!-- Profile -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{profileobject.profile_image.url}}" alt="user" class="profile-pic m-r-10" /> {{profileobject.first_name}} {{profileobject.last_name}}</a>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{profileobject.profile_image.url}}" alt="user" class="profile-pic m-r-10" /> {{profileobject.first_name|title}} {{profileobject.last_name|title}}</a>
                         </li>
                     </ul>
                 </div>

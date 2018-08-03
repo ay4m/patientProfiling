@@ -41,7 +41,7 @@
                                         <tbody>
                                           {% if appointments %}
                                           {% load extra_filters %}
-                                          {% for appinfo in appointments %}
+                                          {% for appinfo in appointments%}
                                             <tr>
                                                 <td>{{appinfo.hospital.name}}</td>
                                                 <td>{{appinfo.doctor.get_full_name}}</td>

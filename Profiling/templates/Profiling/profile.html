@@ -29,7 +29,7 @@
                         <div class="card">
                             <div class="card-block">
                                 <center class="m-t-30"> <img src="{{profileobject.profile_image.url}}" class="img-circle" width="150" />
-                                    <h4 class="card-title m-t-10"><strong> {{profileobject.first_name}} {{profileobject.last_name}} </strong> </h4>
+                                    <h4 class="card-title m-t-10"><strong> {{profileobject.first_name|title}} {{profileobject.last_name|title}} </strong> </h4>
                                     <h6 class="card-subtitle">Date of birth: {{profileobject.dob}}</h6>
                                 </center>
                             </div>
@@ -42,15 +42,16 @@
                             <div class="card-block">
                               <h1 class="card-title"> Profile Information </h1>
                               <div class="row">
-                              <div class="col-3"> First Name:</div><div class="col-9">{{profileobject.first_name}}</div> </div>
+                              <div class="col-3"> First Name:</div><div class="col-9">{{profileobject.first_name|title}}</div> </div>
                               <div class="row">
-                              <div class="col-3"> Middle Name:</div><div class="col-9">{{profileobject.middle_name}}</div> </div>
+                              <div class="col-3"> Middle Name:</div><div class="col-9">{{profileobject.middle_name|title}}</div> </div>
                               <div class="row">
-                              <div class="col-3"> Last Name:</div><div class="col-9">{{profileobject.last_name}}</div> </div>
+                              <div class="col-3"> Last Name:</div><div class="col-9">{{profileobject.last_name|title}}</div> </div>
                               <div class="row">
                               <div class="col-3"> Date of Birth: </div><div class="col-9">{{profileobject.dob}}</div> </div>
                               <div class="row">
-                              <div class="col-3"> Sex: </div><div class="col-9">{{profileobject.sex}}</div> </div>
+                                {% load extra_filters %}
+                              <div class="col-3"> Age | Sex: </div><div class="col-9">{{profileobject.dob|get_age}} | {{profileobject.sex|title}}</div> </div>
                               <div class="row">
                               <div class="col-3"> Email: </div><div class="col-9">{{profileobject.email}}</div> </div>
                               <div class="row">
@@ -59,6 +60,7 @@
 
                             </div>
                             <div class="card-footer text-muted">
+    <center> <a href="{% url 'get_profile' profileobject.id %}" class="btn btn-primary"> Edit Profile </a> </center>
   </div>
                         </div>
                     </div>

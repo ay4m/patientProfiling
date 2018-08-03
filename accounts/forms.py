@@ -42,7 +42,8 @@ class UserRegisterForm(forms.ModelForm):
 				  'dob',
 				  'sex',
 				  'phone_num',
-				  'email']
+				  'email',
+				  'profile_image']
 
 		labels = {
 			'id': 'ID*',
@@ -52,6 +53,7 @@ class UserRegisterForm(forms.ModelForm):
 			'dob': 'Date of Birth* (yyyy-mm-dd)',
 			'phone_num': 'Phone Number',
 			'email': 'E-mail Address',
+			'profile_image': 'Profile Picture'
 		}
 
 class DoctorRegisterForm(UserRegisterForm):
@@ -66,7 +68,8 @@ class DoctorRegisterForm(UserRegisterForm):
 				  'dob',
 				  'sex',
 				  'phone_num',
-				  'email']
+				  'email',
+				  'profile_image']
 
 		labels = {
 			'id': 'ID*',
@@ -76,6 +79,7 @@ class DoctorRegisterForm(UserRegisterForm):
 			'dob': 'Date of Birth* (yyyy-mm-dd)',
 			'phone_num': 'Phone Number',
 			'email': 'E-mail Address',
+			'profile_image': 'Profile Picture',
 		}
 
 class LabRegisterForm(forms.ModelForm):

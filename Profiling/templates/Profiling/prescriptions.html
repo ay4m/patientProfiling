@@ -23,21 +23,24 @@
                 <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card text-center">
                             <div class="card-block">
                               {% if prescriptionlist %}
 
-                              <table>
 
                                 {% for presinfo in prescriptionlist %}
-                                <tr>
-                                     <td> {{presinfo.comments}} </td>
-                                      <td> {{presinfo.prescription}} </td>
-                                 </tr>
+                                <div class="card-header">
+                                    {{presinfo.visit_id}}
+                                  </div>
+
+                                  <ul class="list-group list-group-flush">
+   <li class="list-group-item"><strong> Comments given by the doctor: </strong> {{presinfo.comments}}</li>
+   <li class="list-group-item"><strong> Prescription: </strong> {{presinfo.prescription}}</li>
+ </ul>
+
                                  {% endfor %}
 
 
-                              </table>
                               {% else %}
                               <p> Not available </p>
                               {% endif %}

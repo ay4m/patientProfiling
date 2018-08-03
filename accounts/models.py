@@ -56,8 +56,11 @@ class BaseAccountManager(BaseUserManager):
 							  sex=kwargs.get('sex') ,
 							  phone_num=kwargs.get('phone_num', ''),
 							  email=kwargs.get('email', ''),
-							  qr=id
+							  qr=id,
 							  )
+
+		if kwargs.get('profile_image', None):
+			account.profile_image = kwargs.get('profile_image')
 
 		account.set_password(password)
 		account.save()
@@ -96,6 +99,9 @@ class BaseAccountManager(BaseUserManager):
 							  specialty=kwargs.get('specialty'),
 							  qr=id
 							  )
+		
+		if kwargs.get('profile_image', None):
+			account.profile_image = kwargs.get('profile_image')
 
 		account.set_password(password)
 		account.save()
