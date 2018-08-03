@@ -8,8 +8,22 @@ class DoctorCheckupForm(forms.ModelForm):
 
 	class Meta:
 		model = doctor_checkup
-		fields = ['prescription', 'comments']
+		fields = ['prescription',
+				  'comments',
+				  'temperature',
+				  'bp_systolic',
+				  'bp_diastolic',
+				  'height',
+				  'weight']
 
+		labels = {
+			'prescription': 'Prescriptions',
+			'bp_systolic': 	'Blood Pressure (systolic)',
+			'bp_diastolic': 'Blood Pressure (diastolic)',
+			'height':		'Height (in centimeters)',
+			'weight':		'weight (in kilograms)'
+		}
+		
 	def clean_unique_num(self):
 		unique_num = self.cleaned_data['unique_num']
 		try:
