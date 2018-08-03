@@ -1,5 +1,5 @@
 from django.shortcuts import render
-#import pickle
+import pickle
 
 from accounts.models import UserAccount
 from initializer.models import visit
@@ -32,7 +32,7 @@ def analyse_liver_data(request):
                  'albumin': None,
                  'AGR': None}
 
-    #load_model = pickle.load(open('final_model.sav'),'rb')
+    load_model = pickle.load(open('analysis/final_model.sav','rb'))
 
     # test is a 1d array [age,gender,tb,db,alp,alt,ast,tp,alubumin,a/g]
     
@@ -69,10 +69,11 @@ def analyse_liver_data(request):
 
     test = test + attr_list
 
-    #result = load_model.predict([test])
     print(test)
+    result = load_model.predict([test])
 
-
+    print(result)
+    
     # Display either Your are liver patient or you are not liver patient
     #if(result[0]==1):
      #   return render(request,{'result': 'You are at risk of a liver problem'})
