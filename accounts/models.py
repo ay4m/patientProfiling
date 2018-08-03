@@ -155,6 +155,9 @@ class LabAccount(BaseAccount):
 	name = models.CharField(max_length=100)
 	hospital = models.ForeignKey('HospitalAccount', on_delete=models.CASCADE)
 
+def user_prof_path(instance, filename):
+    """ files will be uploaded to MEDIA_ROOT/user_<id>/filename """
+    return 'user_{0}/profile/{1}'.format(instance.id, filename)
 
 class UserAccount(BaseAccount):
 	first_name = models.CharField(max_length=50)
@@ -165,6 +168,8 @@ class UserAccount(BaseAccount):
 	phone_num = models.CharField(max_length=15, blank=True)
 	email = models.EmailField(max_length=80, blank=True)
 	qr = models.CharField(max_length=15)
+	profile_image = models.ImageField(upload_to=user_prof_path, max_length=140, 
+									  default='default.jpeg')
 
 	def get_full_name(self):
 		return ' '.join([self.first_name, self.middle_name, self.last_name])

@@ -41,7 +41,7 @@ TAGS = [('Xray', 'X-Ray'), ('VXray', 'Video X-Ray'), ('Endoscopy','Endoscopy'), 
 
 def user_dir_path(instance, filename):
     """ files will be uploaded to MEDIA_ROOT/user_<id>/filename """
-    return 'user_{0}/{1}'.format(instance.visit_id.user_id, filename)
+    return 'user_{0}/reports/{1}'.format(instance.visit_id.user_id, filename)
 
 class TestImage (models.Model):
     """ Model for any image report like X-ray,

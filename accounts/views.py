@@ -58,7 +58,6 @@ class DoctorRegister(View):
 
 		if form.is_valid():
 			formData = form.cleaned_data
-			print(formData['specialty'])
 			DoctorAccount.objects.create_doctor(
 											id=formData['id'],
 											password=formData['password'],
