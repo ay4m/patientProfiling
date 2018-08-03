@@ -51,7 +51,7 @@
                               <div class="col-3"> Date of Birth: </div><div class="col-9">{{profileobject.dob}}</div> </div>
                               <div class="row">
                                 {% load extra_filters %}
-                              <div class="col-3"> Age | Sex: </div><div class="col-9">{{profileobject.dob|get_age}} | {{profileobject.sex|title}}</div> </div>
+                              <div class="col-3"> Age | Sex: </div><div class="col-9">{{profileobject.get_age}} | {{profileobject.sex|title}}</div> </div>
                               <div class="row">
                               <div class="col-3"> Email: </div><div class="col-9">{{profileobject.email}}</div> </div>
                               <div class="row">

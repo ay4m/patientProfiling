@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
@@ -179,6 +181,10 @@ class UserAccount(BaseAccount):
 
 	def get_full_name(self):
 		return ' '.join([self.first_name, self.middle_name, self.last_name])
+
+	def get_age(self):
+		age = datetime.date(datetime.now()) - self.dob
+		return int(age.days / 365)
 
 
 class DoctorAccount(UserAccount):

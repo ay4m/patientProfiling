@@ -26,6 +26,7 @@ from barcode_app.views import barcode_view
 from doctor_control.views import add_record as doctor_addRecord
 from labpost.views import add_record as lab_addRecord
 from labpost.views import labReportInput, labReportGenerate, labImageReport
+from analysis.views import analyse_liver_data
 from . import settings
 
 def redirect_append(request, unique_num):
@@ -47,6 +48,7 @@ urlpatterns = [
     path('add_record/<slug:unique_num>', redirect_append),
     path('add_record/<slug:unique_num>/<slug:record_type>', labReportInput),
     path('profile/', include ('Profiling.urls')),
+    path('analyse/', analyse_liver_data),
 
     #report generating urls
     path('report/<slug:visit_id>', labReportGenerate, name = 'labReportGenerate'),
