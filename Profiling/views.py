@@ -5,7 +5,7 @@ from accounts.models import UserAccount, DoctorAccount
 from doctor_control.models import doctor_checkup
 #from .models import MedicalHistory, AppointmentList, PrescriptionsList
 from .forms import UserAccountForm
-from initializer.models import visit
+from initializer.models import visit, qr_map
 import json
 from accounts.decorators import logged_in_as
 
@@ -45,11 +45,12 @@ def index(request, user_id):
                                                     'categories': json.dumps(categories),
                                                     'temperatureset': json.dumps(temperature_series)})
 
-def doctorviewprofile(request, user_id):
+def doctor_profile(request, user_id):
     try:
         profileobject= DoctorAccount.objects.get(pk=user_id)
     except DoctorAccount.DoesNotExist:
         raise Http404("Profile doesn't exist")
+
     return render(request,'Profiling/doctorprofile.html',{'profileobject': profileobject})
 
 def profile(request, user_id):
@@ -57,7 +58,7 @@ def profile(request, user_id):
         profileobject= UserAccount.objects.get(pk=user_id)
     except UserAccount.DoesNotExist:
         raise Http404("Profile doesn't exist")
-    return render(request,'Profiling/profile.html',{'profileobject': profileobject})
+    return render(request,'Profiling/profile.html',{'profileobject': profileobject, 'user':request.user})
 
 
 def get_profile(request, user_id):
@@ -98,6 +99,15 @@ def prescriptions (request, user_id):
     except doctor_checkup.DoesNotExist:
         raise Http404 ('No prescriptions')
     return render(request, 'Profiling/prescriptions.html', {'profileobject': profileobject,'prescriptionlist': checkup})
+
+def patient_profile(request, unique_num):
+    try:
+        qrMapObj = qr_map.objects.get(unique_num__startswith=unique_num[:-1])
+        profileobject = UserAccount.objects.get(id=qrMapObj.user_id)
+        print(profileobject)
+        return redirect('profile', user_id=profileobject)
+    except:
+        raise Http404('Invalid barcode')
 
 def doctorappointments (request, user_id):
     try:

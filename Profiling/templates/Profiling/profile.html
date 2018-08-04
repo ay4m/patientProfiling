@@ -56,12 +56,13 @@
                               <div class="col-3"> Email: </div><div class="col-9">{{profileobject.email}}</div> </div>
                               <div class="row">
                               <div class="col-3"> Phone Number: </div><div class="col-9">{{profileobject.phone_num}}</div> </div>
-
-
-                            </div>
+                              </div>
+                              {% if user == profileobject %}
+                            
                             <div class="card-footer text-muted">
-    <center> <a href="{% url 'get_profile' profileobject.id %}" class="btn btn-primary"> Edit Profile </a> </center>
-  </div>
+                            <center> <a href="{% url 'get_profile' profileobject.id %}" class="btn btn-primary"> Edit Profile </a> </center>
+                             </div>
+                             {% endif %}
                         </div>
                     </div>
                     <!-- Column -->

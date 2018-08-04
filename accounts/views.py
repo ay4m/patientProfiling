@@ -8,7 +8,6 @@ from django.core.exceptions import PermissionDenied
 from accounts.forms import *
 from accounts.models import UserAccount, HospitalAccount, DoctorAccount, LabAccount
 from accounts.decorators import LoggedInAs
-from Profiling.views import profile
 
 class UserRegister(View):
 	template = 'accounts/register.html'
@@ -203,7 +202,7 @@ class DoctorLogin(View):
 
 			if user_type(user, 'Doctor'):
 				login(request, user)
-				return render(request, 'Profiling/doctorprofile.html', {'profileobject': user})
+				return  redirect('doctorprofile', user_id=id)
 
 			error = 'Invalid Credentials'
 

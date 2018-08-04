@@ -108,12 +108,14 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li> <a class="waves-effect waves-dark" href="/barcode/" aria-expanded="false"><i class="mdi mdi-alarm-check"></i><span class="hide-menu">Patient Profile Check</span></a>
+                        <li> <a class="waves-effect waves-dark" href="/barcode/" aria-expanded="false"><i class="mdi mdi-alarm-check"></i><span class="hide-menu">Scan Barcode</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-alarm-check"></i><span class="hide-menu">Patient Profile Check</span></a>
+                        {% if unique_num %}
+                        <li> <a class="waves-effect waves-dark" href="/profile/patient/{{unique_num}}" aria-expanded="false"><i class="mdi mdi-alarm-check"></i><span class="hide-menu">Patient Profile Check</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark btn-info" style="color:white;" href="/add_record/" aria-expanded="false"><i class="mdi mdi-alarm-check"></i><span class="hide-menu">Add Record</span></a>
+                        <li> <a class="waves-effect waves-dark btn-info" style="color:white;" href="/add_record/{{unique_num}}" aria-expanded="false"><i class="mdi mdi-alarm-check"></i><span class="hide-menu">Add Record</span></a>
                         </li>
+                        {% endif %}
 
                     </ul>
 

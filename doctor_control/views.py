@@ -46,4 +46,6 @@ def add_record(request, unique_num):
 															'profileobject': request.user
 															} )
 
-	return render(request, 'doctor_checkup.html', {'form': form, 'profileobject': request.user})
+	return render(request, 'doctor_checkup.html', {'form': form,
+													'profileobject': request.user,
+													'unique_num': unique_num})
