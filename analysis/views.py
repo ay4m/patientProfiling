@@ -62,24 +62,20 @@ def analyse_liver_data(request):
                 if attr_vals[test_obj.testName.testName] is None:
                     attr_vals[test_obj.testName.testName] = test_obj.result
 
-    print('sdfsdf')
-    print(attr_vals)
     for attr, value in attr_vals.items():
         if not value:
             return render(request,'analysis.html',{'result':'Not enough data'})        
         attr_list = replace(attr_list, attr, value)
 
     test = test + attr_list
-    print('sdfsdf')
-    print(test)
 
 
     result = load_model.predict_proba([test])
 
     result = result[0]
-    result = result[0]*100
+    result = int(result[0]*100)
 
     print(result)
     #Probability of a person to have a liver disease
 
-    return render(request,'analysis.html',{'result':result})
+    return render(request,'analysis.html',{'result':result, 'profileobject':user})

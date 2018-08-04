@@ -42,7 +42,8 @@ def add_record(request, unique_num):
 										  weight=weight)
 
 			return render(request, 'doctor_checkup.html', {'prescription': prescription,
-															'comments': comments, 'temperature': temperature, 'bp_systolic': bp_systolic, 'bp_diastolic': bp_diastolic, 'height': height, 'weight': weight}
-						 )
+															'comments': comments,
+															'profileobject': request.user
+															} )
 
-	return render(request, 'doctor_checkup.html', {'form': form})
+	return render(request, 'doctor_checkup.html', {'form': form, 'profileobject': request.user})

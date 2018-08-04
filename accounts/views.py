@@ -157,8 +157,7 @@ class HospitalLogin(View):
 
 			login(request, user)
 
-			return HttpResponseRedirect('/profile/hospital')
-			return render(request,'Profiling/hospital-landingpage.html')
+			return HttpResponseRedirect('/profile/entity')
 
 class UserLogin(View):
 	template = 'accounts/login.html'
@@ -179,7 +178,7 @@ class UserLogin(View):
 
 			if user_type(user, 'User') or user_type(user, 'Doctor'):
 				login(request, user)
-				return  redirect('profile', user_id= id)
+				return  redirect('profile', user_id=id)
 
 			error = 'Invalid Credentials'
 
@@ -204,7 +203,7 @@ class DoctorLogin(View):
 
 			if user_type(user, 'Doctor'):
 				login(request, user)
-				return render(request, 'accounts/login-thankyou.html', {'message': 'Login successful'})
+				return render(request, 'Profiling/doctorprofile.html', {'profileobject': user})
 
 			error = 'Invalid Credentials'
 

@@ -1,23 +1,21 @@
-{% load static %}
-<!doctype html>
-<html>
-<head>
-    <title>Analysis</title>
-    <meta name="viewport" content="width=1024, maximum-scale=1">
-    <link href="{% static 'jquery-gauge.css' %}" type="text/css" rel="stylesheet">
+{% extends 'Profiling/base.html' %}
+{% load staticfiles %}
+{% block content %}
+        <link href="{% static 'jquery-gauge.css' %}" type="text/css" rel="stylesheet">
     <style>
         .demo1 {
             position: relative;
             width: 20vw;
             height: 20vw;
             box-sizing: border-box;
-            float:left;
-            margin:20px
+            float:center;
+            top:60px;
         }
     </style>
 </head>
 <body>
-    <div class="gauge1 demo1"></div>
+    <br><br><p><strong>Liver Disease Prediction</strong></p>
+    <center><div class="gauge1 demo1"></div></center>
 
     <script src="{% static 'jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'jquery-gauge.min.js' %}"></script>
@@ -52,6 +50,6 @@
             value: {{ result }}
         });
     </script>
-</body>
-</html>
+    <p><center><strong>{{result}}% risk of having a liver disease.</strong></center></p>
+{% endblock %}
 

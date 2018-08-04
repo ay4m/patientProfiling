@@ -9,9 +9,10 @@ from initializer.models import visit
 import json
 from accounts.decorators import logged_in_as
 
-@logged_in_as(['Hospital'])
-def hospital_home(request):
-    return render(request,'Profiling/hospital-landingpage.html')
+@logged_in_as(['Hospital', 'Lab', 'Account'])
+def entity_home(request):
+    if request.user.__class__.__name__ == 'HospitalAccount':
+        return render(request,'Profiling/hospital-landingpage.html')
 
 def index(request, user_id):
     pk=user_id

@@ -19,7 +19,7 @@ from . import views
 from barcode_app.views import barcode_view
 
 urlpatterns = [
-    path('hospital/', views.hospital_home, name='hospital_home'),
+    path('entity/', views.entity_home, name='hospital_home'),
     path('<slug:user_id>/', views.index, name='index'),
     path('<slug:user_id>/id/', views.profile, name='profile'),
     path('<slug:user_id>/id/edit/',views.get_profile, name='get_profile'),

@@ -4,4 +4,4 @@ from accounts.decorators import logged_in_as
 
 #@logged_in_as(['Lab', 'Doctor'])
 def barcode_view(request):
-	return render(request, 'barcode.html')
+	return render(request, 'barcode_app/barcode.html')
