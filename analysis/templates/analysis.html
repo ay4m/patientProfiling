@@ -1,6 +1,9 @@
 {% extends 'Profiling/base.html' %}
 {% load staticfiles %}
 {% block content %}
+    {% if error %}
+        <p><strong>{{error}}</strong></p>
+    {% else %}
         <link href="{% static 'jquery-gauge.css' %}" type="text/css" rel="stylesheet">
     <style>
         .demo1 {
@@ -51,5 +54,6 @@
         });
     </script>
     <p><center><strong>{{result}}% risk of having a liver disease.</strong></center></p>
+    {% endif %}
 {% endblock %}
 

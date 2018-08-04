@@ -27,7 +27,7 @@ urlpatterns = [
     path('<slug:user_id>/timeline/',views.timeline, name='timeline'),
     path('<slug:user_id>/appointments/', views.appointments, name='appointments'),
 
-    #path('<slug:user_id>/labreports/', views.labreports, name='labreports'),
+    path('<slug:user_id>/labreports/', views.labreports, name='labreports'),
     path('<slug:user_id>/prescriptions/', views.prescriptions, name='prescriptions'),
     path('doctor/<slug:user_id>/',views.doctor_profile, name='doctorprofile'),
     path('doctor/<slug:user_id>/appointments/',views.doctorappointments, name='doctorappointments'),

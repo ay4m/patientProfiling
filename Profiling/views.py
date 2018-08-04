@@ -8,6 +8,7 @@ from .forms import UserAccountForm
 from initializer.models import visit, qr_map
 import json
 from accounts.decorators import logged_in_as
+from labpost.views import labImageReport, labReportGenerate
 
 @logged_in_as(['Hospital', 'Lab', 'Account'])
 def entity_home(request):
@@ -77,7 +78,8 @@ def timeline(request, user_id):
     try:
         pk=user_id
         profileobject = UserAccount.objects.get(pk=user_id)
-        medicaltimeline= doctor_checkup.objects.filter(visit_id__user_id=pk)
+        lab_reports = labreports(user_id=user_id)
+        doctor_reports = prescriptions(user_id=user_id)
     except doctor_checkup.DoesNotExist:
         raise Http404("No timeline")
     return render(request, 'Profiling/timeline.html', {'profileobject': profileobject,'medicaltimeline':medicaltimeline})
@@ -91,14 +93,21 @@ def appointments (request, user_id):
         raise Http404('No appointments so far')
     return render(request,'Profiling/appointments.html',{'profileobject': profileobject, 'appointments': appointments})
 #
-def prescriptions (request, user_id):
+def prescriptions (request=None, user_id=None):
     try:
         pk=user_id
         profileobject=UserAccount.objects.get(pk=user_id)
-        checkup= doctor_checkup.objects.filter(visit_id__user_id=pk)
+        checkup= doctor_checkup.objects.filter(visit_id__user_id=pk).order_by('-visit_id__timestamp')
     except doctor_checkup.DoesNotExist:
         raise Http404 ('No prescriptions')
-    return render(request, 'Profiling/prescriptions.html', {'profileobject': profileobject,'prescriptionlist': checkup})
+
+    if request:    
+        return render(request, 'Profiling/prescriptions.html', {'profileobject': profileobject,'prescriptionlist': checkup})
+    else:
+        checkup_list = []
+        for item in checkup:
+            pass
+        return checkup
 
 def patient_profile(request, unique_num):
     try:
@@ -120,11 +129,25 @@ def doctorappointments (request, user_id):
 #
 
 #
-#def labreports (request, user_id):
-    #try:
-    #    profileobject= Account.objects.get(pk=user_id)
-#    except Account.DoesNotExist:
-#        raise Http404('doesnt exist')
-#    return render(request, 'Profiling/labreports.html', {'profileobject': profileobject})
+def labreports (request=None, user_id=None):
+    try:
+       profileobject= UserAccount.objects.get(pk=user_id)
+       visits = visit.objects.filter(user_id=profileobject).order_by('-timestamp')
+       lab_reports = []
 
-# Create your views here.
+       for visit_obj in visits:
+          test_report = labReportGenerate(visit_obj)
+          img_report = labImageReport(visit_obj)
+          if len(img_report) > 0 or len(test_report) > 0:
+            lab_reports.append([visit_obj,test_report, img_report])
+
+    except Account.DoesNotExist:
+       raise Http404('Account does not exist')
+
+    print(lab_reports)
+
+    if request: 
+        return render(request, 'Profiling/labreports.html', {'profileobject': profileobject,
+                                                        'lab_reports': lab_reports})
+    else:
+        return lab_reports

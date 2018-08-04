@@ -43,7 +43,7 @@ def analyse_liver_data(request):
     test = []
     user = request.user
     age = user.get_age()
-    print(age)
+
     if user.sex == 'male':
         sex = 1
     else:
@@ -64,7 +64,8 @@ def analyse_liver_data(request):
 
     for attr, value in attr_vals.items():
         if not value:
-            return render(request,'analysis.html',{'result':'Not enough data'})        
+            return render(request,'analysis.html',{'error':'Not enough data for prediction',
+                                                   'profileobject': request.user})       
         attr_list = replace(attr_list, attr, value)
 
     test = test + attr_list

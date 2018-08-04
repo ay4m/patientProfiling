@@ -80,7 +80,7 @@ def labReportInput(request, unique_num, record_type):
 
         return render(request, 'labimage.html', {'form': form})
 
-def labReportGenerate(request, visit_id):
+def labReportGenerate(visit_id):
     """ Generates lab report in tabular form """
     testItems = TestItem.objects.filter(visit_id=visit_id)
     
@@ -112,22 +112,19 @@ def labReportGenerate(request, visit_id):
         #append to testResult
         testResult.append(testR)
 
-    # print(testResult)
-
-    return render(request, 'labreport.html', {
-        'testResult': testResult,
-    })
+    print(testResult)
+    return testResult
 
 
 
 
 
 #generate report of image report like Xray
-def labImageReport(request, visit_id):
+def labImageReport(visit_id):
     """ Generate report of 'IMAGE FILE' uploaded to 
     patient's account """
     #dummy test data
     #SELECT * FROM TestImage WHERE user = user_id = key and dateStamp = date
     testResult = TestImage.objects.filter(visit_id=visit_id)
 
-    return render(request, 'labimagereport.html', {'testResult':testResult})
+    return testResult

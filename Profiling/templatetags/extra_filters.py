@@ -3,6 +3,7 @@ from time import time
 
 from django import template
 
+from accounts.models import HospitalAccount
 from patientProfiling.settings import MEDIA_URL
 
 register = template.Library()
@@ -17,3 +18,8 @@ def get_date(timestamp):
 @register.filter
 def qrURL(user):
 	return MEDIA_URL + 'user_' + str(user) + '/profile/qr.png'
+
+@register.filter
+def hospital_name(hospital_id):
+	h = HospitalAccount.objects.get(pk=hospital_id)
+	return h.name
