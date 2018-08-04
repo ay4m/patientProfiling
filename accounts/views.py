@@ -69,7 +69,7 @@ class DoctorRegister(View):
 			if 'profile_image' in request.FILES:
 				img = request.FILES['profile_image']
 
-			DoctorAccount.objects.create_doctor(
+			doctor = DoctorAccount.objects.create_doctor(
 											id=formData['id'],
 											password=formData['password'],
 											first_name=formData['first_name'],
@@ -82,6 +82,8 @@ class DoctorRegister(View):
 											specialty=formData['specialty'],
 											profile_image=img
 											)
+
+			request.user.doctors.add(doctor)
 
 			message = """
 						Thank you for registering.
@@ -155,8 +157,8 @@ class HospitalLogin(View):
 
 			login(request, user)
 
-			return render(request, 'accounts/login-thankyou.html', {'message': 'Login successful'})
-
+			return HttpResponseRedirect('/profile/hospital')
+			return render(request,'Profiling/hospital-landingpage.html')
 
 class UserLogin(View):
 	template = 'accounts/login.html'

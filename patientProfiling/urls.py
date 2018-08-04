@@ -39,7 +39,6 @@ def redirect_append(request, unique_num):
 urlpatterns = [
     path('admin/', admin.site.urls),
 	path('home/',TemplateView.as_view(template_name='patientProfiling/templates/index.html'), name='home'),
-    path('admin/', admin.site.urls),
     path('account/', include('accounts.urls')),
     path('scan/', qr_mapper),
     path('set_visit/<slug:user_timestamp>', set_visit),
@@ -49,6 +48,7 @@ urlpatterns = [
     path('add_record/<slug:unique_num>/<slug:record_type>', labReportInput),
     path('profile/', include ('Profiling.urls')),
     path('analyse/', analyse_liver_data),
+    path('add_doctor/', include('add_doctors.urls')),
 
     #report generating urls
     path('report/<slug:visit_id>', labReportGenerate, name = 'labReportGenerate'),

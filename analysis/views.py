@@ -32,7 +32,9 @@ def analyse_liver_data(request):
                  'albumin': None,
                  'AGR': None}
 
-    load_model = pickle.load(open('analysis/final_model.sav','rb'))
+
+
+    load_model = pickle.load(open('final_model.sav','rb'))
 
     # test is a 1d array [age,gender,tb,db,alp,alt,ast,tp,alubumin,a/g]
     
@@ -41,7 +43,7 @@ def analyse_liver_data(request):
     test = []
     user = request.user
     age = user.get_age()
-
+    print(age)
     if user.sex == 'male':
         sex = 1
     else:
@@ -60,18 +62,24 @@ def analyse_liver_data(request):
                 if attr_vals[test_obj.testName.testName] is None:
                     attr_vals[test_obj.testName.testName] = test_obj.result
 
+    print('sdfsdf')
+    print(attr_vals)
     for attr, value in attr_vals.items():
-        #if not value:
-         #   return render(request,{'result':'Not enough data'})        
+        if not value:
+            return render(request,'analysis.html',{'result':'Not enough data'})        
         attr_list = replace(attr_list, attr, value)
 
     test = test + attr_list
+    print('sdfsdf')
+    print(test)
 
-    result = load_model.predict([test])
 
-    
-    # Display either Your are liver patient or you are not liver patient
-    #if(result[0]==1):
-     #   return render(request,{'result': 'You are at risk of a liver problem'})
-   
-    return render(request,'result.html',{'result':'You are not at risk of a liver problem'})
+    result = load_model.predict_proba([test])
+
+    result = result[0]
+    result = result[0]*100
+
+    print(result)
+    #Probability of a person to have a liver disease
+
+    return render(request,'analysis.html',{'result':result})

@@ -23,21 +23,33 @@
                 <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-12">
-                        <div class="card text-center">
+                        <div class="card">
+                          {% if prescriptionlist %}
+                          {% load extra_filters %}
+
+
+                            <ul style="list-style-type: none;">
+                                  {% for presinfo in prescriptionlist %}
+                              <li>
                             <div class="card-block">
-                              {% if prescriptionlist %}
-                              {% load extra_filters %}
-
-
-                                {% for presinfo in prescriptionlist %}
                                 <div class="card-header">
-                                    <strong> Visit Date: </strong> {{presinfo.visit_id.timestamp|get_date}}
+                                    <button class="btn-primary"> {{presinfo.visit_id.timestamp|get_date}} </button>
+                                    <button class="btn-danger"> Checked by {{presinfo.visit_id.doctor.get_full_name}}
                                   </div>
 
-                                  <ul class="list-group list-group-flush">
-   <li class="list-group-item"><strong> Comments given by the doctor: </strong> {{presinfo.comments}}</li>
-   <li class="list-group-item"><strong> Prescription: </strong> {{presinfo.prescription}}</li> 
-                                 {% endfor %}
+
+   <li class="list-group-item"> <div class="card-body">
+<h5 class="card-title"><button type="button" class="btn btn-light">Comments</button></h5>
+<p class="card-text"> {{presinfo.comments}}</p>
+</div></li>
+   <li class="list-group-item"><div class="card-body">
+<h5 class="card-title"><button type="button" class="btn btn-light">Prescriptions</button></h5>
+<p class="card-text"> {{presinfo.prescription}}</p>
+</div></li>
+</li>
+ {% endfor %}
+</ol>
+
 
 
                               {% else %}

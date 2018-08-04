@@ -161,18 +161,6 @@ class BaseAccount(AbstractBaseUser, PermissionsMixin):
 	USERNAME_FIELD = 'id'
 
 
-class HospitalAccount(BaseAccount):
-	name = models.CharField(max_length=100)
-	address = models.CharField(max_length=80)
-	phone_num = models.CharField(max_length=15, blank=True)
-
-
-class LabAccount(BaseAccount):
-	name = models.CharField(max_length=100)
-	hospital = models.ForeignKey('HospitalAccount', on_delete=models.CASCADE)
-
-
-
 class UserAccount(BaseAccount):
 	first_name = models.CharField(max_length=50)
 	middle_name = models.CharField(max_length=50, blank=True)
@@ -195,3 +183,15 @@ class UserAccount(BaseAccount):
 
 class DoctorAccount(UserAccount):
 	specialty = models.CharField(max_length=20)
+
+
+class HospitalAccount(BaseAccount):
+	name = models.CharField(max_length=100)
+	address = models.CharField(max_length=80)
+	phone_num = models.CharField(max_length=15, blank=True)
+	doctors = models.ManyToManyField(DoctorAccount)
+
+
+class LabAccount(BaseAccount):
+	name = models.CharField(max_length=100)
+	hospital = models.ForeignKey('HospitalAccount', on_delete=models.CASCADE)

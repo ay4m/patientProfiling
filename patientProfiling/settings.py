@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'doctor_control',
     'widget_tweaks',
     'labpost',
-    'analysis'
+    'analysis',
+    'add_doctors'
 ]
 
 MIDDLEWARE = [

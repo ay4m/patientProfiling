@@ -1,13 +1,17 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import Http404
-from accounts.models import UserAccount
+from accounts.models import UserAccount, DoctorAccount
 from doctor_control.models import doctor_checkup
 #from .models import MedicalHistory, AppointmentList, PrescriptionsList
 from .forms import UserAccountForm
 from initializer.models import visit
 import json
+from accounts.decorators import logged_in_as
 
+@logged_in_as(['Hospital'])
+def hospital_home(request):
+    return render(request,'Profiling/hospital-landingpage.html')
 
 def index(request, user_id):
     pk=user_id
@@ -40,6 +44,12 @@ def index(request, user_id):
                                                     'categories': json.dumps(categories),
                                                     'temperatureset': json.dumps(temperature_series)})
 
+def doctorviewprofile(request, user_id):
+    try:
+        profileobject= DoctorAccount.objects.get(pk=user_id)
+    except DoctorAccount.DoesNotExist:
+        raise Http404("Profile doesn't exist")
+    return render(request,'Profiling/doctorprofile.html',{'profileobject': profileobject})
 
 def profile(request, user_id):
     try:
@@ -87,6 +97,17 @@ def prescriptions (request, user_id):
     except doctor_checkup.DoesNotExist:
         raise Http404 ('No prescriptions')
     return render(request, 'Profiling/prescriptions.html', {'profileobject': profileobject,'prescriptionlist': checkup})
+
+def doctorappointments (request, user_id):
+    try:
+        pk=user_id
+        profileobject= DoctorAccount.objects.get(pk=user_id)
+        appointments= visit.objects.filter(doctor=user_id)
+    except visit.DoesNotExist:
+        raise Http404('No appointments so far')
+    return render(request,'Profiling/doctorappointments.html',{'profileobject': profileobject, 'appointments': appointments})
+#
+
 #
 #def labreports (request, user_id):
     #try:

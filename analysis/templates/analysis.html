@@ -1,0 +1,57 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+    <title>Analysis</title>
+    <meta name="viewport" content="width=1024, maximum-scale=1">
+    <link href="{% static 'jquery-gauge.css' %}" type="text/css" rel="stylesheet">
+    <style>
+        .demo1 {
+            position: relative;
+            width: 20vw;
+            height: 20vw;
+            box-sizing: border-box;
+            float:left;
+            margin:20px
+        }
+    </style>
+</head>
+<body>
+    <div class="gauge1 demo1"></div>
+
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'jquery-gauge.min.js' %}"></script>
+    <script>
+
+        // first example
+        var gauge = new Gauge($('.gauge1'), {value: 70});
+
+        // second example
+        $('.gauge1').gauge({
+            values: {
+                0 : 'Low',
+                100: 'High'
+            },
+            colors: {
+                0 : '#00FF00',
+                20: '#A1CB43',
+                40: '#E4CE21',
+                60: '#F9A205',
+                80: '#D93A2E',
+            
+            },
+            angles: [
+                180,
+                360
+            ],
+            lineWidth: 8,
+            arrowWidth: 15,
+            arrowColor: '#1E98E4',
+            inset:true,
+
+            value: {{ result }}
+        });
+    </script>
+</body>
+</html>
+
