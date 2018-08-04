@@ -29,7 +29,7 @@
                     <div class="col-lg-4 col-xlg-3 col-md-5">
                         <div class="card">
                             <div class="card-block">
-                                <center class="m-t-30"> <img src="{% static 'Profiling/assets/images/users/1.png' %}" class="img-circle" width="150" />
+                                <center class="m-t-30"> <img src="{% static '{{profileobject.profile_image}}' %}" class="img-circle" width="150" />
                                     <h4 class="card-title m-t-10"><strong> {{profileobject.first_name}} {{profileobject.last_name}} </strong> </h4>
                                     <h6 class="card-subtitle">Date of birth: {{profileobject.dob}}</h6>
                                 </center>

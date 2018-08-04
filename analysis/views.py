@@ -52,8 +52,6 @@ def analyse_liver_data(request):
 
     visits = visit.objects.filter(user_id=user).order_by('-timestamp')
 
-    print(visits)
-
     for visit_obj in visits:
         tests = TestItem.objects.filter(visit_id=visit_obj)
 
@@ -69,10 +67,8 @@ def analyse_liver_data(request):
 
     test = test + attr_list
 
-    print(test)
     result = load_model.predict([test])
 
-    print(result)
     
     # Display either Your are liver patient or you are not liver patient
     #if(result[0]==1):

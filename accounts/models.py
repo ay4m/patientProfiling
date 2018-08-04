@@ -1,8 +1,13 @@
 from datetime import datetime
+import qrcode
 
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
+
+def user_prof_path(instance, filename):
+    """ files will be uploaded to MEDIA_ROOT/user_<id>/filename """
+    return 'user_{0}/profile/{1}'.format(instance.id, filename)
 
 class BaseAccountManager(BaseUserManager):
 	def create_hospital(self, id, password, **kwargs):
@@ -47,8 +52,7 @@ class BaseAccountManager(BaseUserManager):
 		if not kwargs.get('sex', None):
 			raise ValueError('sex field is required')
 
-		#if not kwargs.get('qr', None):
-		#	raise ValueError('qr field is required')
+		
 
 		account = UserAccount(id=id,
 							  first_name=kwargs.get('first_name'),
@@ -66,6 +70,10 @@ class BaseAccountManager(BaseUserManager):
 
 		account.set_password(password)
 		account.save()
+
+		img = qrcode.make(id)
+		img.save('media/' + user_prof_path(account, 'qr.png'))
+
 		return account
 
 	def create_doctor(self, id, password, **kwargs):
@@ -163,9 +171,7 @@ class LabAccount(BaseAccount):
 	name = models.CharField(max_length=100)
 	hospital = models.ForeignKey('HospitalAccount', on_delete=models.CASCADE)
 
-def user_prof_path(instance, filename):
-    """ files will be uploaded to MEDIA_ROOT/user_<id>/filename """
-    return 'user_{0}/profile/{1}'.format(instance.id, filename)
+
 
 class UserAccount(BaseAccount):
 	first_name = models.CharField(max_length=50)
@@ -178,7 +184,7 @@ class UserAccount(BaseAccount):
 	qr = models.CharField(max_length=15)
 	profile_image = models.ImageField(upload_to=user_prof_path, max_length=140, 
 									  default='default.jpeg')
-
+	#user_prof_path defined at the top
 	def get_full_name(self):
 		return ' '.join([self.first_name, self.middle_name, self.last_name])
 

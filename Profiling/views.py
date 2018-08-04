@@ -6,11 +6,39 @@ from doctor_control.models import doctor_checkup
 #from .models import MedicalHistory, AppointmentList, PrescriptionsList
 from .forms import UserAccountForm
 from initializer.models import visit
+import json
 
 
 def index(request, user_id):
+    pk=user_id
     profileobject= UserAccount.objects.get(pk=user_id)
-    return render(request,'Profiling/index.html', {'profileobject': profileobject})
+    temperatureset= doctor_checkup.objects.filter(visit_id__user_id=pk) \
+        .values('visit_id','temperature')
+
+    categories = list()
+    temperature_series = list()
+    bp_diastolicset= list()
+    bp_systolicset = list()
+
+    for entry in temperatureset:
+        temperature_series.append(entry['temperature'])
+        categories.append('Visit ID: %s' % entry['visit_id'])
+
+
+    pressureset= doctor_checkup.objects.filter(visit_id__user_id=pk) \
+        .values('visit_id')\
+        .values('bp_diastolic','bp_systolic')\
+        .order_by('visit_id')
+
+    for entry in pressureset:
+        bp_diastolicset.append(entry['bp_diastolic'])
+        bp_systolicset.append(entry['bp_systolic'])
+
+    return render(request,'Profiling/index.html', { 'bp_diastolicset': json.dumps(bp_diastolicset),
+                                                    'bp_systolicset': json.dumps(bp_systolicset),
+                                                    'profileobject': profileobject,
+                                                    'categories': json.dumps(categories),
+                                                    'temperatureset': json.dumps(temperature_series)})
 
 
 def profile(request, user_id):
