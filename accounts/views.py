@@ -230,7 +230,7 @@ class LabLogin(View):
 			if user_type(user, 'Lab'):
 				logout(request)
 				login(request, user)
-				return render(request, 'accounts/login-thankyou.html', {'message': 'Login successful'})
+				return HttpResponseRedirect('/profile/lab')
 
 			raise PermissionDenied
 

@@ -44,9 +44,10 @@
                                           {% for appinfo in appointments%}
                                             <tr>
                                                 <td>{{appinfo.hospital.name}}</td>
-                                                <td>{{appinfo.doctor.get_full_name}}</td>
+                                                <td>Dr. {{appinfo.doctor.get_full_name}}</td>
                                                 <td>{{appinfo.doctor.specialty}}</td>
                                                 <td>{{appinfo.timestamp|get_date}}</td>
+                                                <td><a href="{% url 'singlereport' appinfo.visit_id %}">View reports</a></td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>

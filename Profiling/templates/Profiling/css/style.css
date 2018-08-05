@@ -715,6 +715,11 @@ html body .bg-white {
 /*******************
 Rounds
 *******************/
+.row::after{
+  content:"";
+  clear:both;
+  display:table;
+}
 .round {
   line-height: 48px;
   color: #ffffff;

@@ -1,0 +1,124 @@
+{% extends 'Profiling/base.html' %}
+{% block content %}
+
+
+
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <div class="row page-titles">
+                    <div class="col-md-5 col-8 align-self-center">
+                        <h3 class="text-themecolor">Dashboard</h3>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ol>
+                    </div>
+
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <!-- Row -->
+                <div class="row">
+                    <!-- Column -->
+                    <div class="col-lg-8 col-md-7">
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="row">
+                                        <div class="d-flex flex-wrap">
+                                          <div id ="charts">
+                                          <p>  {{categories}} </p>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                                          <script src="https://code.highcharts.com/highcharts.src.js"></script>
+                                          <script>
+  Highcharts.chart('charts', {
+      chart: {
+          type: 'column'
+      },
+      title: {
+          text: 'Temperature History for {{profileobject.first_name}}'
+      },
+      xAxis: {
+          categories: {{ categories|safe }}
+      },
+      series: [{
+          name: 'Temperature',
+          data: {{ temperatureset }},
+          color: 'green'
+      }]
+  });
+</script>
+</div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-5">
+                        <div class="card">
+                            <div class="card-block">
+                              <center><h3>QR Code</h3></center>
+                              {% load extra_filters %}
+                              <center><img src="{{profileobject|qrURL}}"></center>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Row -->
+                <!-- Row -->
+                <div class="row">
+                    <!-- Column -->
+                    <div class="col-lg-4 col-xlg-3 col-md-5">
+                        <!-- Column -->
+                        <div class="card">
+
+                          <h1> SEPERATED THIS FOR SOMETHING </h1>
+                        </div>
+                        <!-- Column -->
+                        <div class="card">
+                           <h1> SEPERATED FOR SOMETHING ELSE </h1>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-xlg-9 col-md-7">
+                        <div class="card">
+                          <div id ="charts-3">
+                          <script>
+                          Highcharts.chart('charts-3', {
+                             chart: {
+                                 type: 'bar'
+                             },
+                             title: {
+                                 text: 'Blood Pressure History'
+                             },
+                             xAxis: {
+                                 categories: {{categories|safe }}
+                             },
+                             series: [{
+                                 name: 'Diastolic',
+                                 data: {{bp_diastolicset}},
+                                 color: 'grey'
+                             },
+                             {
+                                 name: 'Systolic',
+                                 data: {{bp_systolicset}},
+                                 color: 'gold'
+                             }
+                             ]
+                          });
+                          </script>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+            </div>
+              {% endblock %}

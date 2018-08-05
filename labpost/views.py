@@ -78,7 +78,7 @@ def labReportInput(request, unique_num, record_type):
         else:
             form = TestImageForm()
 
-        return render(request, 'labimage.html', {'form': form})
+        return render(request, 'labimage.html', {'form': form, 'profileobject':request.user})
 
 def labReportGenerate(visit_id):
     """ Generates lab report in tabular form """
@@ -106,13 +106,12 @@ def labReportGenerate(visit_id):
         elif result <= min:
             flag = 'L'
         else:
-            flag = 'M'
+            flag = '-'
         #form individual list
         testR = [testName, result, flag, unit, reference]
         #append to testResult
         testResult.append(testR)
 
-    print(testResult)
     return testResult
 
 

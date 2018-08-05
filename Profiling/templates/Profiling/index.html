@@ -38,7 +38,7 @@
                                           <script>
   Highcharts.chart('charts', {
       chart: {
-          type: 'column'
+          type: 'line'
       },
       title: {
           text: 'Temperature History for {{profileobject.first_name}}'
@@ -78,12 +78,26 @@
                     <div class="col-lg-4 col-xlg-3 col-md-5">
                         <!-- Column -->
                         <div class="card">
-
-                          <h1> SEPERATED THIS FOR SOMETHING </h1>
-                        </div>
-                        <!-- Column -->
-                        <div class="card">
-                           <h1> SEPERATED FOR SOMETHING ELSE </h1>
+                          <div id="cardchart">
+                          <script>
+                          Highcharts.chart('cardchart', {
+                          chart: {
+                          type: 'area'
+                          },
+                          title: {
+                          text: 'Weight History'
+                          },
+                          xAxis: {
+                          categories: {{ categories|safe }}
+                          },
+                          series: [{
+                          name: 'Weight',
+                          data: {{ weight_series }},
+                          color: 'blue'
+                          }]
+                          });
+                          </script>
+                          </div>
                         </div>
                     </div>
                     <div class="col-lg-8 col-xlg-9 col-md-7">

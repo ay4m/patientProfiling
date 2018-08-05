@@ -31,7 +31,8 @@
                             {% for lab_report in lab_reports %}
                             {% for item in lab_report %}
                                 {% if forloop.counter == 1 %}
-                                    <p><strong>{{item.timestamp|get_date}} at {{item.hospital_id|hospital_name}}</strong></p>
+                                    <button class="btn-primary"> <p><strong>{{item.timestamp|get_date}} at {{item.hospital_id|hospital_name}}</strong></p> </button>
+                                    <br>
                                 {% elif forloop.counter == 2 %}
                                   {% if item|length > 0%}
                                     <table class="table table-striped table-light">
@@ -52,17 +53,21 @@
                                                 {{ element }}
                                             </td>
                                         {% endfor %}
-                                    </tr>            
+                                    </tr>
                                   {% endfor %}
                                     </tbody>
                                 </table>
                                  {% endif %}
                                 {% else %}
+                                  <div class="row">
                                   {% for report in item %}
-                                    <img src="{{report.image.url}}"
+                                      <div class="column" style="float: left; width: 25%;padding: 5px;">
+                                      <img style="margin: auto; display:block;" src="{{report.image.url}}"
                                     alt="{{report.tag}}" %} width="200px" height="300px">
                                     <figcaption class="figure-caption text-center font-weight-bold">{{report.description}}</figcaption>
+                                  </div>
                                   {% endfor %}
+                                </div>
                                 {% endif %}
                             {% endfor %}
                             {% endfor %}

@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
+{% extends "Profiling/labbase.html" %}
+{% block content %}
+<div class="card-block">
 	<form action="" method="post">
 		{% csrf_token %}
-		<input type="submit" name="report" Value="Upload test report"> <br>
-		<input type="submit" name="image" Value="Upload test image">
+		<input class="btn btn-block btn-primary" type="submit" name="report" Value="Upload test report"> <br>
+		<input class="btn btn-block btn-primary" type="submit" name="image" Value="Upload test image">
 	</form>
 </body>
-</html>
+</div>
+{% endblock %}

@@ -15,6 +15,9 @@ def entity_home(request):
     if request.user.__class__.__name__ == 'HospitalAccount':
         return render(request,'Profiling/hospital-landingpage.html')
 
+def labLanding(request):
+    return render(request, 'Profiling/lablandingpage.html')
+
 def index(request, user_id):
     pk=user_id
     profileobject= UserAccount.objects.get(pk=user_id)
@@ -72,17 +75,19 @@ def get_profile(request, user_id):
             return redirect('profile', user_id=profileobject.pk)
     else:
         form = UserAccountForm(instance=profileobject)
-    return render(request, 'Profiling/profile-edit.html', {'form': form, 'profileobject':profileobject})
+    return render(request, 'Profiling/profile-edit.html', {'form': form,
+                                                           'profileobject':profileobject})
 
 def timeline(request, user_id):
     try:
         pk=user_id
         profileobject = UserAccount.objects.get(pk=user_id)
-        lab_reports = labreports(user_id=user_id)
-        doctor_reports = prescriptions(user_id=user_id)
-    except doctor_checkup.DoesNotExist:
-        raise Http404("No timeline")
-    return render(request, 'Profiling/timeline.html', {'profileobject': profileobject,'medicaltimeline':medicaltimeline})
+        medicaltimeline= doctor_checkup.objects.filter(visit_id__user_id=pk)
+    except:
+        raise Http404('Account does not exist')
+
+    return render(request, 'Profiling/timeline.html', {'medicaltimeline': medicaltimeline, 'profileobject': profileobject})
+
 
 def appointments (request, user_id):
     try:
@@ -90,7 +95,7 @@ def appointments (request, user_id):
         profileobject= UserAccount.objects.get(pk=user_id)
         appointments= visit.objects.filter(user_id=pk)
     except visit.DoesNotExist:
-        raise Http404('No appointments so far')
+        raise Http404('Account does not exist')
     return render(request,'Profiling/appointments.html',{'profileobject': profileobject, 'appointments': appointments})
 #
 def prescriptions (request=None, user_id=None):
@@ -106,8 +111,8 @@ def prescriptions (request=None, user_id=None):
     else:
         checkup_list = []
         for item in checkup:
-            pass
-        return checkup
+            checkup_list.append([item.visit_id, [item.prescription], [item.comments]])    
+        return checkup_list
 
 def patient_profile(request, unique_num):
     try:
@@ -144,10 +149,26 @@ def labreports (request=None, user_id=None):
     except Account.DoesNotExist:
        raise Http404('Account does not exist')
 
-    print(lab_reports)
-
     if request: 
         return render(request, 'Profiling/labreports.html', {'profileobject': profileobject,
                                                         'lab_reports': lab_reports})
     else:
         return lab_reports
+
+
+
+def single_labreport(request, visit_id):
+    try:
+       visit_obj = visit.objects.get(pk=visit_id)
+       profileobject= visit_obj.user_id
+    except Account.DoesNotExist:
+       raise Http404('Account does not exist')
+    
+    lab_reports=[]
+    test_report = labReportGenerate(visit_obj)
+    img_report = labImageReport(visit_obj)
+    if len(img_report) > 0 or len(test_report) > 0:
+        lab_reports.append([visit_obj,test_report, img_report])
+
+    return render(request, 'Profiling/labreports.html', {'profileobject': profileobject,
+                                                        'lab_reports': lab_reports})
